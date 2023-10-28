@@ -11,7 +11,7 @@ import { MainLogo, UserIcon } from "../Icons/Icons";
 
 const Home = () => {
   return (
-    <div className="homeContainter w-[1200px] h-[900px] rounded-lg bg-cyan-500 shadow-lg shadow-cyan-500/50">
+    <div className="homeContainter w-[1200px] h-[900px] rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
       <div className="header flex items-center justify-between px-[50px] mt-[25px] mb-[35px]">
         <div className="systemName flex items-center justify-center">
           <MainLogo></MainLogo>

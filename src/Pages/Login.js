@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <div className="registerContainter w-[620px]  rounded-lg bg-cyan-500 shadow-lg shadow-cyan-500/50">
+    <div className="registerContainter w-[620px]  rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
       <div className="header flex items-center justify-center mt-[20px]">
         <MainLogo></MainLogo>
         <h1 className="font-bold text-[34px] text-[#61FF00] ml-4">
