@@ -25,7 +25,7 @@ const Home = () => {
             <PopoverHandler>
               <Button>
                 <span className="font-bold text-[24px] ml-4">
-                  Nguyễn An Khang{" "}
+                  Nguyễn An Khang
                 </span>
               </Button>
             </PopoverHandler>
