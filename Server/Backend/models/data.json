@@ -1,0 +1,31 @@
+{
+    "client": [
+        {
+            "hostName": "localhost",
+            "port": 4001,
+            "password": "123",
+            "file": [
+                "file1.txt",
+                "file2.txt"
+            ]
+        },
+        {
+            "hostName": "Don2512",
+            "password": "123",
+            "port": 3001,
+            "file": [
+                "file1.txt",
+                "file2.txt"
+            ]
+        },
+        {
+            "hostName": "localhost1",
+            "password": "123",
+            "port": 3001,
+            "file": [
+                "file2.txt",
+                "file2.txt"
+            ]
+        }
+    ]
+}
