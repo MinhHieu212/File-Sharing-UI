@@ -25,7 +25,7 @@ const Login = () => {
     console.log(data);
 
     if (!Object.keys(errors).length) {
-      navigate("/Home");
+      navigate("/UserTerminal");
     }
   };
 

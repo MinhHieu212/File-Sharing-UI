@@ -9,7 +9,7 @@ const TerminalController = (props = {}) => {
   ]);
 
   const [terminalLineData, setTerminalLineData] = useState([
-    <TerminalOutput>Welcome to the File Sharing UI Demo!</TerminalOutput>,
+    <TerminalOutput>Welcome to the File Sharing Application</TerminalOutput>,
   ]);
 
   // const fetchDataFromBackend = async () => {
@@ -44,7 +44,9 @@ const TerminalController = (props = {}) => {
 
   const handleClear = () => {
     setTerminalLineData([
-      <TerminalOutput>{"Welcome to the File Sharing UI Demo!"}</TerminalOutput>,
+      <TerminalOutput>
+        {"Welcome to the File Sharing Application!"}
+      </TerminalOutput>,
     ]);
   };
 
@@ -72,7 +74,7 @@ const TerminalController = (props = {}) => {
   return (
     <div className="container h-full rounded-lg overflow-hidden">
       <Terminal
-        name="Client Terminal"
+        name="User Terminal"
         colorMode={ColorMode.Dark}
         onInput={handleInput}
         height="687px"
