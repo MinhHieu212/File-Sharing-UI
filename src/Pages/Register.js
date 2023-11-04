@@ -8,7 +8,7 @@ import * as yup from "yup";
 const schema = yup.object().shape({
   hostname: yup.string().required("Hostname is required"),
   password: yup.string().min(6).max(32).required("Password is required"),
-  password2: yup
+  confirmPwd: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .min(6)
@@ -33,10 +33,10 @@ const Register = () => {
   };
 
   return (
-    <div className="registerContainter w-[620px]  rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
+    <div className="registerContainter w-[560px]  rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
       <div className="header flex items-center justify-center mt-[20px]">
         <MainLogo></MainLogo>
-        <h1 className="font-bold text-[34px] text-[#61FF00] ml-4">
+        <h1 className="font-bold text-[30px] text-[#66FCF1] ml-4">
           File-Sharing Register
         </h1>
       </div>
@@ -44,7 +44,7 @@ const Register = () => {
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
             htmlFor="hostname"
-            className="text-[24px] font-bold inline-block w-full pl-[60px] mb-[15px]"
+            className="text-[24px] font-bold inline-block w-full pl-[30px] mb-[15px]"
           >
             Hostname
           </label>
@@ -55,7 +55,7 @@ const Register = () => {
             id="hostname"
             className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
           />
-          <span className="text-[white] text-[24px]">
+          <span className="text-[orange] text-[24px]">
             {errors?.hostname?.message}
           </span>
         </div>
@@ -63,7 +63,7 @@ const Register = () => {
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
             htmlFor="password"
-            className="text-[24px] font-bold inline-block w-full pl-[60px] mb-[15px]"
+            className="text-[24px] font-bold inline-block w-full pl-[30px] mb-[15px]"
           >
             Password
           </label>
@@ -74,33 +74,33 @@ const Register = () => {
             id="password"
             className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
           />
-          <span className="text-[white] text-[24px]">
+          <span className="text-[orange] text-[24px]">
             {errors?.password?.message}
           </span>
         </div>
 
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
-            htmlFor="password2"
-            className="text-[24px] font-bold inline-block w-full pl-[60px] mb-[15px]"
+            htmlFor="confirmPwd"
+            className="text-[24px] font-bold inline-block w-full pl-[30px] mb-[15px]"
           >
             Confirm password
           </label>
           <input
-            {...register("password2")}
-            name="password2"
+            {...register("confirmPwd")}
+            name="confirmPwd"
             type="password"
-            id="password2"
+            id="confirmPwd"
             className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
           />
-          <span className="text-[white] text-[24px]">
-            {errors?.password2?.message}
+          <span className="text-[orange] text-[24px]">
+            {errors?.confirmPwd?.message}
           </span>
         </div>
 
         <button
           type="submit"
-          className="bg-[#61FF00] w-[500px] h-[80px] p-2 mx-auto block rounded-lg mt-[47px] text-[24px] font-bold"
+          className="bg-[#66FCF1] w-[500px] h-[80px] p-2 mx-auto block rounded-lg mt-[47px] text-[24px] font-bold"
         >
           Create User
         </button>
@@ -109,7 +109,7 @@ const Register = () => {
       <div className="flex items-center justify-center text-[24px] font-bold my-[25px]">
         Adready have an account?
         <Link to="/Login">
-          <span className="text-[#61FF00] decoration-none ml-2">Login</span>
+          <span className="text-[#66FCF1] decoration-none ml-2">Login</span>
         </Link>
       </div>
     </div>

@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 
 const TerminalController = (props = {}) => {
+  const [data, setData] = useState([
+    "Reply from 172.16.0.1 bytes = 42 times=42s TTL m= 64",
+    "Reply from 172.16.0.1 bytes = 32 times=24s TTL = 44",
+    "Reply from 172.16.0.1 bytes = 42 times=42s TTL m= 64",
+  ]);
+
   const [terminalLineData, setTerminalLineData] = useState([
     <TerminalOutput>Welcome to the File Sharing UI Demo!</TerminalOutput>,
   ]);
@@ -33,15 +39,34 @@ const TerminalController = (props = {}) => {
   //   fetchDataFromBackend();
   // }, []);
 
+  // Note:
+  // terminalLineData nhận vào một mạng dữ liêu, mỗi dòng trong mảng sẽ là một TerminalOutput
+
+  const handleClear = () => {
+    setTerminalLineData([
+      <TerminalOutput>{"Welcome to the File Sharing UI Demo!"}</TerminalOutput>,
+    ]);
+  };
+
   const handleInput = (terminalInput) => {
-    // Xử lý dữ liệu đầu vào từ prompt ở đây
     console.log(`New terminal input received: '${terminalInput}'`);
 
     // Thêm dữ liệu đầu vào từ prompt vào danh sách terminalLineData
-    setTerminalLineData((prevData) => [
-      ...prevData,
-      <TerminalOutput>{terminalInput}</TerminalOutput>,
-    ]);
+    if (terminalInput === "clear") {
+      handleClear();
+    } else if (terminalInput === "ping") {
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        ...data.map((line, index) => (
+          <TerminalOutput key={index}>{line}</TerminalOutput>
+        )),
+      ]);
+    } else {
+      setTerminalLineData((prevData) => [
+        ...prevData,
+        <TerminalOutput>{terminalInput}</TerminalOutput>,
+      ]);
+    }
   };
 
   return (
