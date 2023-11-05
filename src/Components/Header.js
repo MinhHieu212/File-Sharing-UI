@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Popover,
   PopoverHandler,
@@ -9,7 +9,15 @@ import {
 import { MainLogo, UserIcon } from "../Icons/Icons";
 
 const Header = () => {
+  const hostName = localStorage.getItem("hostname");
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await localStorage.removeItem("hostname");
+    await localStorage.removeItem("password");
+    navigate("/Login");
+  };
+
   return (
     <div className="header flex items-center justify-between px-[50px] mt-[25px] mb-[35px]">
       <div className="systemName flex items-center justify-center">
@@ -38,13 +46,13 @@ const Header = () => {
           TERMINAL
         </span>
       </div>
-      <div className="userName flex items-center justify-center cursor-pointer ">
+      <div className="userName flex items-center justify-between cursor-pointer">
         <UserIcon></UserIcon>
         <Popover placement="bottom">
           <PopoverHandler>
             <Button>
-              <span className="font-semibold text-[24px] ml-4 text-[#66FCF1]">
-                Nguyễn An Khang
+              <span className="font-semibold text-[24px] ml-4 text-[#66FCF1] capitalize">
+                {hostName}
               </span>
             </Button>
           </PopoverHandler>
@@ -53,11 +61,13 @@ const Header = () => {
               <p className=" text-center text-[20px] font-bold  text-white mb-3">
                 Change account?
               </p>
-              <Link to="/Login">
-                <button className="p-3 bg-[#66FCF1] w-[80%] mx-auto block rounded-md font-bold text-[20px]">
-                  Log out
-                </button>
-              </Link>
+
+              <button
+                className="p-3 bg-[#66FCF1] w-[80%] mx-auto block rounded-md font-bold text-[20px]"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
             </div>
           </PopoverContent>
         </Popover>

@@ -13,7 +13,8 @@ function App() {
           <Route path="/Login" element={<Login />}></Route>
           <Route path="/UserTerminal" element={<UserTerminal />}></Route>
           <Route path="/UserGui" element={<UserGui />}></Route>
-          <Route path="/" element={<UserTerminal />}></Route>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/File-Sharing-UI" element={<Login />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
