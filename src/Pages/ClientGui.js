@@ -2,6 +2,41 @@ import React from "react";
 import { SearchIcon, UploadIcon } from "../Icons/Icons";
 import { CommunityFileItem, RepoFileItem } from "../Components/FileItem";
 import Header from "../Components/Header";
+import Modal from "../Components/Modal";
+
+const FileOnSystem = [
+  "giaitich.pdf",
+  "hopdong.pdf",
+  "report.docx",
+  "giaitich.pdf",
+  "hopdong.pdf",
+  "report.docx",
+  "giaitich.pdf",
+  "hopdong.pdf",
+  "report.docx",
+  "hopdong.pdf",
+  "report.docx",
+  "giaitich.pdf",
+  "hopdong.pdf",
+  "report.docx",
+  "hopdong.pdf",
+  "report.docx",
+  "giaitich.pdf",
+  "hopdong.pdf",
+  "report.docx",
+  "hopdong.pdf",
+  "report.docx",
+  "giaitich.pdf",
+  "hopdong.pdf",
+  "report.docx",
+];
+
+const FileOnRepo = [
+  "giaitich.pdf",
+  "hopdong.pdf",
+  "report.docx",
+  "VoNhat.docx",
+];
 
 const ClientGui = () => {
   return (
@@ -21,21 +56,12 @@ const ClientGui = () => {
             <SearchIcon></SearchIcon>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto overflow-y-auto">
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
-            <CommunityFileItem fileName={"Giaitich.pdf"}></CommunityFileItem>
+            {FileOnSystem.map((fileName, index) => (
+              <CommunityFileItem
+                fileName={fileName}
+                key={index}
+              ></CommunityFileItem>
+            ))}
           </div>
         </div>
         <div className="w-[49%] h-[100%] bg-[#252A33] rounded-lg">
@@ -43,13 +69,18 @@ const ClientGui = () => {
             Repository
           </h1>
           <div className="Search text-[25px] bg-white rounded-md w-[90%] h-[60px] flex items-center justify-between mx-auto mt-4 overflow-hidden px-4">
-            <input type="file" className="rounded-md mx-2" />
-            <UploadIcon></UploadIcon>
+            <input
+              type="file"
+              className="rounded-md mx-2 font-semibold text-[blue]"
+            />
+            <Modal message={"Confirm upload this [file]"}>
+              <UploadIcon></UploadIcon>
+            </Modal>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto  overflow-y-auto">
-            <RepoFileItem fileName={"Giaitich.pdf"}></RepoFileItem>
-            <RepoFileItem fileName={"Giaitich.pdf"}></RepoFileItem>
-            <RepoFileItem fileName={"Giaitich.pdf"}></RepoFileItem>
+            {FileOnRepo.map((fileName, index) => (
+              <RepoFileItem fileName={fileName} key={index}></RepoFileItem>
+            ))}
           </div>
         </div>
       </div>

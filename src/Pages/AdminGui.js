@@ -1,7 +1,10 @@
 import React from "react";
 import { SearchIcon } from "../Icons/Icons";
-import HostnameItem from "../Components/HostnameItem";
+import ItemList from "../Components/ItemList";
 import Header from "../Components/Header";
+
+const hostnameList = ["MINHHIEU", "MINHMINH", "HACKER", "H6_P304", "HCMUT"];
+const fileOfHostname = ["giaitich.pdf", "hopdong.pdf", "report.docx"];
 
 const AdminGui = () => {
   return (
@@ -21,18 +24,19 @@ const AdminGui = () => {
             <SearchIcon></SearchIcon>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto overflow-y-auto">
-            <HostnameItem hostname={"MINHHIEU"}></HostnameItem>
-            <HostnameItem hostname={"NGOCNGOC"}></HostnameItem>
-            <HostnameItem hostname={"MINHHIEU"}></HostnameItem>
-            <HostnameItem hostname={"HELLOWORLD"}></HostnameItem>
-            <HostnameItem hostname={"MINHHIEU"}></HostnameItem>
+            {hostnameList.map((hostName, index) => (
+              <ItemList infomation={hostName} key={index}></ItemList>
+            ))}
           </div>
         </div>
         <div className="w-[49%] h-[100%]">
           <div className="w-[100%] h-[150px] bg-[#252A33] rounded-lg pt-2">
-            <h1 className="text-[26px] text-[#66FCF1] text-center font-bold ">
-              Ping hostname
-            </h1>
+            <div className="text-[26px] text-[#66FCF1]  font-bold flex items-center justify-between px-[25px]">
+              <span className=""> Ping hostname</span>
+              <span className="">
+                Status: <span className="text-[yellow] pl-3"> OFF </span>
+              </span>
+            </div>
             <div className="flex items-center mt-4 justify-between w-[90%] mx-auto text-[24px]">
               <input
                 type="text"
@@ -64,8 +68,9 @@ const AdminGui = () => {
               Files Shared from [Host Name]
             </p>
             <div className="w-[90%] mx-auto h-[340px] bg-white rounded-lg mt-3 py-3 overflow-y-auto">
-              <HostnameItem hostname={"Giaitich.pdf"}></HostnameItem>
-              <HostnameItem hostname={"Giaitich.pdf"}></HostnameItem>
+              {fileOfHostname.map((fileName, index) => (
+                <ItemList infomation={fileName} key={index}></ItemList>
+              ))}
             </div>
           </div>
         </div>

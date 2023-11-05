@@ -6,14 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  hostname: yup.string().required("Hostname is required"),
-  password: yup.string().min(6).max(32).required("Password is required"),
+  hostname: yup.string().required("hostname is required"),
+  password: yup.string().min(6).max(32).required("password is required"),
   confirmPwd: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .oneOf([yup.ref("password"), null], "passwords must match")
     .min(6)
     .max(32)
-    .required("Confirm password is required"),
+    .required("confirm password is required"),
 });
 
 const Register = () => {
@@ -24,7 +24,7 @@ const Register = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const navigate = useNavigate();
 
-  // Xử lí data tại đây giao tiếp với BE
+  // Gửi thông tin đến BE
   const onSubmit = (data) => {
     console.log(data);
     if (!Object.keys(errors).length) {
@@ -33,7 +33,7 @@ const Register = () => {
   };
 
   return (
-    <div className="registerContainter w-[560px]  rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
+    <div className="registerContainter w-[440px]  rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
       <div className="header flex items-center justify-center mt-[20px]">
         <MainLogo></MainLogo>
         <h1 className="font-bold text-[30px] text-[#66FCF1] ml-4">
@@ -44,7 +44,7 @@ const Register = () => {
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
             htmlFor="hostname"
-            className="text-[24px] font-bold inline-block w-full pl-[30px] mb-[15px]"
+            className="text-[24px] font-bold inline-block w-full pl-[20px] mb-[15px]"
           >
             Hostname
           </label>
@@ -53,7 +53,7 @@ const Register = () => {
             name="hostname"
             type="text"
             id="hostname"
-            className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
+            className="w-[400px] h-[60px] bg-[white] text-[24px]  px-4 outline-none rounded-lg"
           />
           <span className="text-[orange] text-[24px]">
             {errors?.hostname?.message}
@@ -63,7 +63,7 @@ const Register = () => {
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
             htmlFor="password"
-            className="text-[24px] font-bold inline-block w-full pl-[30px] mb-[15px]"
+            className="text-[24px] font-bold inline-block w-full pl-[20px] mb-[15px]"
           >
             Password
           </label>
@@ -72,7 +72,7 @@ const Register = () => {
             name="password"
             type="password"
             id="password"
-            className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
+            className="w-[400px] h-[60px] bg-[white] text-[24px] px-4 outline-none rounded-lg"
           />
           <span className="text-[orange] text-[24px]">
             {errors?.password?.message}
@@ -82,7 +82,7 @@ const Register = () => {
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
             htmlFor="confirmPwd"
-            className="text-[24px] font-bold inline-block w-full pl-[30px] mb-[15px]"
+            className="text-[24px] font-bold inline-block w-full pl-[20px] mb-[15px]"
           >
             Confirm password
           </label>
@@ -91,7 +91,7 @@ const Register = () => {
             name="confirmPwd"
             type="password"
             id="confirmPwd"
-            className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
+            className="w-[400px] h-[60px] bg-[white] text-[24px]  px-4 outline-none rounded-lg"
           />
           <span className="text-[orange] text-[24px]">
             {errors?.confirmPwd?.message}
@@ -100,7 +100,7 @@ const Register = () => {
 
         <button
           type="submit"
-          className="bg-[#66FCF1] w-[500px] h-[80px] p-2 mx-auto block rounded-lg mt-[47px] text-[24px] font-bold"
+          className="bg-[#66FCF1] w-[400px] h-[60px] p-2 mx-auto block rounded-lg mt-[47px] text-[24px] font-bold"
         >
           Create User
         </button>

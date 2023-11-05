@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import ClientGui from "./ClientGui";
 import AdminGui from "./AdminGui";
 
 const UserGui = () => {
-  const [role, setRole] = useState("Client");
+  const hostName = localStorage.getItem("hostname");
+  const passWord = localStorage.getItem("password");
+
   return (
-    <>{role === "Client" ? <ClientGui></ClientGui> : <AdminGui></AdminGui>}</>
+    <>
+      {hostName === "admin123" && passWord === "admin123" ? (
+        <AdminGui></AdminGui>
+      ) : (
+        <ClientGui></ClientGui>
+      )}
+    </>
   );
 };
 
