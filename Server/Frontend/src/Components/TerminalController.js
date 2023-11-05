@@ -40,14 +40,13 @@ const TerminalController = (props = {}) => {
     console.log(`New terminal input received: '${terminalInput}'`);
     //let data = terminalInput;
     // Gửi dữ liệu đến backend
-    axios
-      .post("http://localhost:4001/", {
-        terminalInput,
+    axios.post('http://localhost:4001/api/data', {terminalInput})
+      .then(response => {
+        // Xử lý kết quả từ phía Backend nếu cần
+        console.log(response.data);
       })
-      .then((response) => response.data)
-      .then((data) => {
-        // Xử lý dữ liệu trả về
-        console.log(data);
+      .catch(error => {
+        console.error(error);
       });
 
     // Thêm dữ liệu đầu vào từ prompt vào danh sách terminalLineData

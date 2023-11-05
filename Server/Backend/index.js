@@ -16,13 +16,20 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({extends : true}));
 
-// nhận API từ fontend và xử lí
-app.use("/", async (req, res) => {
-    if (req.method === "POST") {
-      // điều kiển 
-      await controllerCommand(req, res);
-    } 
+// // nhận API từ fontend và xử lí
+// app.use("/", async (req, res) => {
+//     res.send("ok");
+// });
+
+app.post('/api/data', async (req, res) => {
+  const receivedData = req.body; // Dữ liệu JSON được gửi từ phía Frontend
+  // Xử lý dữ liệu ở đây
+  console.log('Received data:', receivedData);
+  return res.send("ok");
+  await controllerCommand(req, res);
 });
+
+
   
 const PORT = 4001;
 
@@ -30,11 +37,22 @@ const listener = app.listen(PORT, () => {
   console.log(listener.address().port);
 });
 
+
+
+
+
+
+
+
+
+
 const server = new net.Server();
 exports.server = server;
 server.listen({port: 4002, host: 'localhost' }, function() {
     console.log("Server listening for connection requests on socket");
 });
+
+
 
 // nhận kết nối tcp
 server.on('connection', function(socket) {
