@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  username: yup.string().required("Username is required"),
+  hostname: yup.string().required("Hostname is required"),
   password: yup.string().min(6).max(32).required("Password is required"),
 });
 
@@ -40,20 +40,20 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
-            htmlFor="username"
+            htmlFor="hostname"
             className="text-[24px] font-bold inline-block w-full pl-[60px] mb-[15px]"
           >
-            Username
+            Hostname
           </label>
           <input
-            {...register("username")}
-            name="username"
+            {...register("hostname")}
+            name="hostname"
             type="text"
-            id="username"
+            id="hostname"
             className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
           />
           <span className="text-[white] text-[24px]">
-            {errors?.username?.message}
+            {errors?.hostname?.message}
           </span>
         </div>
 
