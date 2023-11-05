@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/File-Sharing-UI/static/css/main.aeff9811.css",
+    "main.js": "/File-Sharing-UI/static/js/main.3a48865c.js",
+    "index.html": "/File-Sharing-UI/index.html",
+    "main.aeff9811.css.map": "/File-Sharing-UI/static/css/main.aeff9811.css.map",
+    "main.3a48865c.js.map": "/File-Sharing-UI/static/js/main.3a48865c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aeff9811.css",
+    "static/js/main.3a48865c.js"
+  ]
+}
