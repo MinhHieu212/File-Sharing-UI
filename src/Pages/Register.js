@@ -6,14 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  username: yup.string().required("Username is required"),
-  password: yup.string().min(6).max(32).required("Password is required"),
-  password2: yup
+  hostname: yup.string().required("hostname is required"),
+  password: yup.string().min(6).max(32).required("password is required"),
+  confirmPwd: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .oneOf([yup.ref("password"), null], "passwords must match")
     .min(6)
     .max(32)
-    .required("Confirm password is required"),
+    .required("confirm password is required"),
 });
 
 const Register = () => {
@@ -24,47 +24,46 @@ const Register = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const navigate = useNavigate();
 
-  // Xử lí data tại đây giao tiếp với BE
+  // Gửi thông tin đến BE
   const onSubmit = (data) => {
     console.log(data);
     if (!Object.keys(errors).length) {
-      const { username, password, password2 } = data;
       navigate("/Login");
     }
   };
 
   return (
-    <div className="registerContainter w-[620px]  rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
+    <div className="registerContainter w-[440px]  rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
       <div className="header flex items-center justify-center mt-[20px]">
         <MainLogo></MainLogo>
-        <h1 className="font-bold text-[34px] text-[#61FF00] ml-4">
+        <h1 className="font-bold text-[30px] text-[#66FCF1] ml-4">
           File-Sharing Register
         </h1>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
-            htmlFor="username"
-            className="text-[24px] font-bold inline-block w-full pl-[60px] mb-[15px]"
+            htmlFor="hostname"
+            className="text-[24px] font-bold inline-block w-full pl-[20px] mb-[15px]"
           >
-            Username
+            Hostname
           </label>
           <input
-            {...register("username")}
-            name="username"
+            {...register("hostname")}
+            name="hostname"
             type="text"
-            id="username"
-            className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
+            id="hostname"
+            className="w-[400px] h-[60px] bg-[white] text-[24px]  px-4 outline-none rounded-lg"
           />
-          <span className="text-[white] text-[24px]">
-            {errors?.username?.message}
+          <span className="text-[orange] text-[24px]">
+            {errors?.hostname?.message}
           </span>
         </div>
 
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
             htmlFor="password"
-            className="text-[24px] font-bold inline-block w-full pl-[60px] mb-[15px]"
+            className="text-[24px] font-bold inline-block w-full pl-[20px] mb-[15px]"
           >
             Password
           </label>
@@ -73,35 +72,35 @@ const Register = () => {
             name="password"
             type="password"
             id="password"
-            className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
+            className="w-[400px] h-[60px] bg-[white] text-[24px] px-4 outline-none rounded-lg"
           />
-          <span className="text-[white] text-[24px]">
+          <span className="text-[orange] text-[24px]">
             {errors?.password?.message}
           </span>
         </div>
 
         <div className="flex flex-col w-full items-center my-[24px]">
           <label
-            htmlFor="password2"
-            className="text-[24px] font-bold inline-block w-full pl-[60px] mb-[15px]"
+            htmlFor="confirmPwd"
+            className="text-[24px] font-bold inline-block w-full pl-[20px] mb-[15px]"
           >
             Confirm password
           </label>
           <input
-            {...register("password2")}
-            name="password2"
+            {...register("confirmPwd")}
+            name="confirmPwd"
             type="password"
-            id="password2"
-            className="w-[500px] h-[80px] bg-[#373737] text-[24px] text-white px-4 outline-none rounded-lg"
+            id="confirmPwd"
+            className="w-[400px] h-[60px] bg-[white] text-[24px]  px-4 outline-none rounded-lg"
           />
-          <span className="text-[white] text-[24px]">
-            {errors?.password2?.message}
+          <span className="text-[orange] text-[24px]">
+            {errors?.confirmPwd?.message}
           </span>
         </div>
 
         <button
           type="submit"
-          className="bg-[#61FF00] w-[500px] h-[80px] p-2 mx-auto block rounded-lg mt-[47px] text-[24px] font-bold"
+          className="bg-[#66FCF1] w-[400px] h-[60px] p-2 mx-auto block rounded-lg mt-[47px] text-[24px] font-bold"
         >
           Create User
         </button>
@@ -110,7 +109,7 @@ const Register = () => {
       <div className="flex items-center justify-center text-[24px] font-bold my-[25px]">
         Adready have an account?
         <Link to="/Login">
-          <span className="text-[#61FF00] decoration-none ml-2">Login</span>
+          <span className="text-[#66FCF1] decoration-none ml-2">Login</span>
         </Link>
       </div>
     </div>
