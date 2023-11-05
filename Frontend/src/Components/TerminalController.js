@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
-import axios from "axios";
-
+import axios from 'axios';
 
 const TerminalController = (props = {}) => {
   const [data, setData] = useState([
@@ -54,16 +53,17 @@ const TerminalController = (props = {}) => {
 
   const handleInput = (terminalInput) => {
     console.log(`New terminal input received: '${terminalInput}'`);
-    //let data = terminalInput;
-    // Gửi dữ liệu đến backend
-    axios.post('http://localhost:4001/api/data', {terminalInput})
-      .then(response => {
-        // Xử lý kết quả từ phía Backend nếu cần
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+
+
+    axios.post('http://localhost:3001/api/admin', {terminalInput})
+    .then(response => {
+      // Xử lý kết quả từ phía Backend nếu cần
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
 
     // Thêm dữ liệu đầu vào từ prompt vào danh sách terminalLineData
     if (terminalInput === "clear") {
