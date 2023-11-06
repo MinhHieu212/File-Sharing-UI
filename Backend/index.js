@@ -3,7 +3,7 @@ const cors = require('cors');
 const net = require('net');
 // const bodyParser = require('body-parser');
 const {controllerCommand, controllerToClinet} = require('./controller/controllerAdmin.js');
-
+const login=require("./controller/login")
 require('dotenv').config();
 
 const app = express();
@@ -42,6 +42,8 @@ app.post('/api/user', async (req, res) => {
   await controllerCommand(req, res);
 });
 
+// Đăng nhập
+app.post('/ap1/login',login)
 
   
 const PORT = 3001;

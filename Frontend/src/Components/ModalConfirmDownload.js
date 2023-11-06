@@ -1,25 +1,10 @@
 import React, { useState } from "react";
 import CenterModal from "./CenterModal";
-import createNode from "../p2p/src/index";
 
 const ModalConfirmDownLoad = ({ children, message }) => {
   const [openModal, setOpenModal] = useState(false);
   const handleClose = () => {
     setOpenModal(false);
-  };
-
-  const node = createNode();
-  const ip = "172.16.0.232";
-  const port = 4000;
-
-  const handleConfirmDownload = () => {
-    setOpenModal(false);
-    console.log("Bat dau tai file ");
-    node.listen(3000, 3001, () => {
-      node.connect(ip, Number(port), () => {
-        console.log('Connection to ${ip} established.');
-      });
-    });
   };
 
   return (
@@ -40,10 +25,7 @@ const ModalConfirmDownLoad = ({ children, message }) => {
             >
               Hủy bỏ
             </button>
-            <button
-              className="bg-[#4a4a8e] p-3 w-[40%] block rounded-lg text-[20px] font-semibold text-white"
-              onClick={handleConfirmDownload}
-            >
+            <button className="bg-[#4a4a8e] p-3 w-[40%] block rounded-lg text-[20px] font-semibold text-white">
               Xác nhận
             </button>
           </div>

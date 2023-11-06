@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CenterModal from "./CenterModal";
 
-const Modal = ({ children, message }) => {
+const ModalConfirmUpload = ({ children, message }) => {
   const [openModal, setOpenModal] = useState(false);
   const handleClose = () => {
     setOpenModal(false);
@@ -35,4 +35,4 @@ const Modal = ({ children, message }) => {
   );
 };
 
-export default Modal;
+export default ModalConfirmUpload;
