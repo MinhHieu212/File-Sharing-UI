@@ -24,3 +24,5 @@ async function login(req, res) {
   return res.status(401).send("Login Failed, Unauthorized !");
 }
 module.exports = login;
+
+module.exports = login;

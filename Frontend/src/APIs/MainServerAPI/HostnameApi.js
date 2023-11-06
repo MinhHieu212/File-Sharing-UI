@@ -8,15 +8,15 @@ const HostnameApi = {
   },
 
   register(data) {
-    const path = "/hostname";
-
-    return MainServerApi.post(path, data);
+    const path = "/api/register";
+    console.log(JSON.stringify(data));
+    return MainServerApi.post(path, JSON.stringify(data));
   },
 
   login(data) {
-    const path = "/hostname";
-
-    return MainServerApi.post(path, data);
+    const path = "/api/login";
+    console.log(JSON.stringify(data));
+    return MainServerApi.post(path, JSON.stringify(data));
   },
 
   ping(command) {

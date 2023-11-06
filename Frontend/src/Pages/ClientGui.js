@@ -1,45 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SearchIcon, UploadIcon } from "../Icons/Icons";
 import { CommunityFileItem, RepoFileItem } from "../Components/FileItem";
 import Header from "../Components/Header";
 import ModalConfirmUpload from "../Components/ModalConfirmUpload";
 import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
 
-const FileOnSystem = [
-  "giaitich.pdf",
-  "hopdong.pdf",
-  "report.docx",
-  "giaitich.pdf",
-  "hopdong.pdf",
-  "report.docx",
-  "giaitich.pdf",
-  "hopdong.pdf",
-  "report.docx",
-  "hopdong.pdf",
-  "report.docx",
-  "giaitich.pdf",
-  "hopdong.pdf",
-  "report.docx",
-  "hopdong.pdf",
-  "report.docx",
-  "giaitich.pdf",
-  "hopdong.pdf",
-  "report.docx",
-  "hopdong.pdf",
-  "report.docx",
-  "giaitich.pdf",
-  "hopdong.pdf",
-  "report.docx",
-];
+// const FileOnSystem = [
+//   "giaitich.pdf",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "giaitich.pdf",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "giaitich.pdf",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "giaitich.pdf",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "giaitich.pdf",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "giaitich.pdf",
+//   "hopdong.pdf",
+//   "report.docx",
+// ];
 
-const FileOnRepo = [
-  "giaitich.pdf",
-  "hopdong.pdf",
-  "report.docx",
-  "VoNhat.docx",
-];
+// const FileOnRepo = [
+//   "giaitich.pdf",
+//   "hopdong.pdf",
+//   "report.docx",
+//   "VoNhat.docx",
+// ];
 
 const ClientGui = () => {
+  const [file, setFile] = useState();
+  const [fileOnSystem, setFileOnSystem] = useState([]);
+  const [fileOnRepo, setFileOnRepo] = useState([]);
+
+  useEffect(() => {
+    const fetchDataFromAPI = async () => {
+      try {
+        const response = await RepositoryApi.getList();
+        if (response.status === 200) {
+          console.log("success");
+        } else {
+          console.log("Fail");
+        }
+      } catch (error) {
+        console.error("Error occurred:", error);
+        console.log("Fail");
+      }
+    };
+    fetchDataFromAPI();
+  }, []);
+
   return (
     <div className="homeContainter w-[1200px] h-[900px] rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
       <Header></Header>
@@ -57,7 +78,7 @@ const ClientGui = () => {
             <SearchIcon></SearchIcon>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto overflow-y-auto">
-            {FileOnSystem.map((fileName, index) => (
+            {fileOnSystem.map((fileName, index) => (
               <CommunityFileItem
                 fileName={fileName}
                 key={index}
@@ -75,18 +96,17 @@ const ClientGui = () => {
               type="file"
               className="rounded-md mx-2 font-semibold text-[blue]"
               onChange={(event) => {
-                const file = event.target.files[0];
-                const formData = new FormData();
-                formData.append("file", file);
-                RepositoryApi.addFile(formData);
+                const selectedFile = event.target.files[0];
+                setFile(selectedFile);
+                console.log(selectedFile.name);
               }}
             />
-            <ModalConfirmUpload message={"Confirm upload this [file]"}>
+            <ModalConfirmUpload message={`Confirm upload File`} file={file}>
               <UploadIcon></UploadIcon>
             </ModalConfirmUpload>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto  overflow-y-auto">
-            {FileOnRepo.map((fileName, index) => (
+            {fileOnRepo.map((fileName, index) => (
               <RepoFileItem fileName={fileName} key={index}></RepoFileItem>
             ))}
           </div>
