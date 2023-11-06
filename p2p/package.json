@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+    "multer-utf8": "^1.4.5-lts.11",
     "os": "^0.1.2"
   }
 }

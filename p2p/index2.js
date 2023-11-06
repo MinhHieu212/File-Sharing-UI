@@ -10,6 +10,7 @@ const node = createNode();
 node.listen(4000, 4001, () => {
   console.log("node server is running on port 4000 and file server is 4001");
 });
+
 app.post("/fetch", (req, res) => {
   const clientIP = req.body.clientIp;
   console.log(clientIP);

@@ -48,7 +48,7 @@ const controllerCommand = async (req, res) => {
 const controllerToClient = async (req, res) => {
 }
 
-exports.controllerToClinet = controllerToClinet;
+exports.controllerToClient = controllerToClient;
 exports.controllerCommand = controllerCommand;
 
 // const controllerToClinet = async (Csprotocal) => {

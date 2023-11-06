@@ -6,7 +6,11 @@ const read = async () => {
     const data = JSON.parse(jsonString);
     return data['client'];
 };
-
+const readFull= async () => {
+    const jsonString = await fs.promises.readFile("models/dataAdmin.json", "utf8");
+    const data = JSON.parse(jsonString);
+    return data
+};
 write = async (data) => {
     const jsonString = JSON.stringify(data);
     fs.writeFile('./data.json', jsonString, err => {
@@ -19,3 +23,4 @@ write = async (data) => {
 
 exports.writeFile = write;
 exports.readFile = read;
+exports.readFull = readFull;
