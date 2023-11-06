@@ -6,9 +6,9 @@ async function register(req, res) {
     //hostname not hostName
   const hostname = req.body.hostname;
   const password = req.body.password;
-  const ipv6Address = req.socket.remoteAddress;
-  const ipv4Address = ipv6Address.split(":").pop();
-
+  const ipv6Address = req.socket.remoteAddress;          //thằng này chỉ khi mà có client ngoài request 
+  const ipv4Address = ipv6Address.split(":").pop();      //thì ip mới khác 1 còn nếu mà
+                                                        //máy mình tự request localhost thì auto là 1
 //   console.log(`Client IP Address: ${ipv4Address}`);
 
   const data = await readFile();    //not include client

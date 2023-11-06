@@ -18,23 +18,8 @@ const ClientGui = () => {
     "giaitich.pdf",
     "hopdong.pdf",
     "report.docx",
-    // ... add more files as needed
   ]);
-  const [fileOnRepo, setFileOnRepo] = useState([]);
-
-  useEffect(() => {
-    // Fetch fileOnRepo data from your API
-    const fetchDataFromAPI = async () => {
-      try {
-        const response = await RepositoryApi.getList(); // Ensure this API call returns an array of file names
-        setFileOnRepo("Success", response); // Assuming response.data is an array of file names
-      } catch (error) {
-        console.error("Error fetching data from API:", error);
-      }
-    };
-
-    fetchDataFromAPI();
-  }, []);
+  // const [fileOnRepo, setFileOnRepo] = useState([]);
 
   return (
     <div className="homeContainter w-[1200px] h-[900px] rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
@@ -81,9 +66,9 @@ const ClientGui = () => {
             </ModalConfirmUpload>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto  overflow-y-auto">
-            {fileOnRepo.map((fileName, index) => (
+            {/* {fileOnRepo.map((fileName, index) => (
               <RepoFileItem fileName={fileName} key={index}></RepoFileItem>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>

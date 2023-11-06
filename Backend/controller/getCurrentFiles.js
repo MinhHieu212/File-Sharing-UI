@@ -14,6 +14,6 @@ async function getCurrentFiles(req, res) {
       }
     }
   }
-  res.send({ currentFiles });
+  res.status(200).send({ currentFiles });
 }
 module.exports = getCurrentFiles;
