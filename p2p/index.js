@@ -30,7 +30,7 @@ app.post("/uploadRepo",uploadRepo.single('file'),(req,res)=>{
   res.send("Upload to Repo Success fully")
 })
 // sau khi upload thì gọi API lên serverBE để update db
-app.get("/searchRepo",(req,res)=>{
+app.get("/hostRepo",(req,res)=>{
   const folderPath= path.join(__dirname,"../p2p/repo")
   fs.readdir(folderPath, (err, files) => {
     if (err) {
