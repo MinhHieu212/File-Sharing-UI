@@ -7,6 +7,7 @@
     "example": "examples"
   },
   "scripts": {
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
   "dependencies": {
     "express": "^4.18.2",
     "multer-utf8": "^1.4.5-lts.11",
+    "nodemon": "^3.0.1",
     "os": "^0.1.2"
   }
 }

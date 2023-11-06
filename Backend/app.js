@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const net = require('net');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const {controllerCommand, controllerClient} = require('./controller/controllerAdmin.js');
 const login=require("./controller/login")
 const register=require("./controller/register")
+const multer = require("multer");
 require('dotenv').config();
+
 
 const app = express();
 
@@ -15,6 +17,8 @@ app.use(cors({
     origin: "*",
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
+var upload = multer()
+app.use(upload.array())
 app.use(express.json());
 app.use(express.urlencoded({extends : true}));
 
@@ -43,13 +47,13 @@ app.post('/api/user', async (req, res) => {
   await controllerCommand(req, res);
 });
 
-// Đăng nhập
-app.post('/ap1/login', login)
+// Đăng nhập , Đăng kí
+app.post('/api/login', login)
 app.post('/api/register', register);
+// Tìm kiếm file 
+app.get('/api/login', login)
 
-
-  
-const PORT = 3001;
+const PORT = 5000;
 
 const listener = app.listen(PORT, () => {
   console.log("Server listening for connection requests on port " + listener.address().port);
