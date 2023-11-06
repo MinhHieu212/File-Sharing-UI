@@ -18,7 +18,7 @@ const controllerCommand = async (req, res) => {
                         || array.length === 1 && array[0] !== "hostname")
         return res.send({"ERROR" : "Unknown command"});
 
-    data = await readFile();
+    data = await readFile();        // lấy data client
     
     if(array[0] === "hostname")
     {
@@ -45,7 +45,7 @@ const controllerCommand = async (req, res) => {
     }
 }
 
-const controllerToClinet = async (req, res) => {
+const controllerToClient = async (req, res) => {
 }
 
 exports.controllerToClinet = controllerToClinet;

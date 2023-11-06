@@ -23,5 +23,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 #p2p download and repo
-Frontend/src/p2p/downloads/*
-Frontend/src/p2p/repo/*
+p2p/downloads/*
+p2p/repo/*

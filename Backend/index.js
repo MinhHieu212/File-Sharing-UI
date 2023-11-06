@@ -10,7 +10,7 @@ const app = express();
 
 // xác thực khi dùng APIs
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 app.use(express.json());
@@ -25,7 +25,7 @@ app.post('/api/admin', async (req, res) => {
   await controllerCommand(req, res);
 });
 
-// server và clinet
+// server và client
 app.post('/api/server', async (req, res) => {
   const receivedData = req.body; // Dữ liệu JSON được gửi từ phía Frontend
   // Xử lý dữ liệu ở đây
@@ -34,7 +34,7 @@ app.post('/api/server', async (req, res) => {
 });
 
 
-// frontend và backend của Clinet
+// frontend và backend của Client
 app.post('/api/user', async (req, res) => {
   const receivedData = req.body; // Dữ liệu JSON được gửi từ phía Frontend
   // Xử lý dữ liệu ở đây
