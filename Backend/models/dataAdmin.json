@@ -5,7 +5,7 @@
       "port": 4001,
       "password": "123",
       "isActive": true,
-      "file": ["file1.txt", "file2.txt"]
+      "file": ["excel.txt", "dog.txt"]
     },
     {
       "hostname": "Don2512",

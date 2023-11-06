@@ -6,6 +6,8 @@ const {controllerCommand, controllerClient} = require('./controller/controllerAd
 const login=require("./controller/login")
 const register=require("./controller/register")
 const getCurrentFiles=require("./controller/getCurrentFiles")
+const updateHostListFile=require("./controller/updateHostListFile")
+
 const multer = require("multer");
 require('dotenv').config();
 
@@ -52,7 +54,9 @@ app.post('/api/user', async (req, res) => {
 app.post('/api/login', login)
 app.post('/api/register', register);
 // Tìm kiếm file 
-app.get('/api/current-files', getCurrentFiles)
+app.get('/api/all-current-files', getCurrentFiles)
+// update list file for hostname
+app.put('/api/list-file-of-a-host', updateHostListFile)
 
 const PORT = 5000;
 
