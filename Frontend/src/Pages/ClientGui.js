@@ -3,6 +3,7 @@ import { SearchIcon, UploadIcon } from "../Icons/Icons";
 import { CommunityFileItem, RepoFileItem } from "../Components/FileItem";
 import Header from "../Components/Header";
 import ModalConfirmUpload from "../Components/ModalConfirmUpload";
+import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
 
 const FileOnSystem = [
   "giaitich.pdf",
@@ -74,7 +75,10 @@ const ClientGui = () => {
               type="file"
               className="rounded-md mx-2 font-semibold text-[blue]"
               onChange={(event) => {
-                console.log(event.target.files[0]);
+                const file = event.target.files[0];
+                const formData = new FormData();
+                formData.append("file", file);
+                RepositoryApi.addFile(formData);
               }}
             />
             <ModalConfirmUpload message={"Confirm upload this [file]"}>
