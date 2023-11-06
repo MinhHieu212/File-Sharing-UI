@@ -13,14 +13,16 @@
       "password": "123",
       "isActive": true,
       "port": 3001,
-      "file": ["file3.txt", "file4.txt"]
+      "file": ["file3.txt", "file4.txt"],
+      "localIp": "1"
     },
     {
       "hostname": "localhost1",
       "password": "123",
       "isActive": true,
       "port": 3001,
-      "file": ["file5.txt", "file6.txt"]
+      "file": ["file5.txt", "file6.txt"],
+      "localIp": "1"
     },
     { "hostname": "localhost2", "password": "18072003", "localIp": "1" },
     { "hostname": "localhost3", "password": "123", "localIp": "1" }
