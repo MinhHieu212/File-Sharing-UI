@@ -64,7 +64,7 @@ module.exports = (options) => {
           const socket2 = new net.Socket();
           const address = path.join(process.cwd(), "repo", message.fileName);
           const fileStream = fs.createReadStream(address);
-          socket2.connect(4001,message.ip, function () {   
+          socket2.connect(3001,message.ip, function () {   
                  // cần xet ip là 1 biến
             fileStream.pipe(socket2)                // server quăng data cho client
                 .on('finish', function () {
@@ -123,7 +123,7 @@ module.exports = (options) => {
 
   const connect = (ip, port, cb) => {
     const socket = new net.Socket();
-
+    console.log(ip,"======================");
     socket.connect(port, ip, () => {
       handleNewSocket(socket);
       cb && cb();

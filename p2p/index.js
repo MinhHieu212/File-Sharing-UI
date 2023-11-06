@@ -12,10 +12,12 @@ node.listen(3000,3001,()=>{
 })
 app.post("/fetch",(req,res)=>{
     const clientIP=req.body.clientIp
+    console.log(clientIP);
     const clientPort=req.body.clientPort
     const fileName=req.body.fileName
     node.connect(clientIP,Number(clientPort), () => {
-        console.log(`Connection to ${ip} established.`);
+        console.log(`Connection to ${clientIP} established.`);
       })
+    node.fetchFile({ fileName })
 })
 app.listen("8080",()=>{console.log("im running on 8080");})
