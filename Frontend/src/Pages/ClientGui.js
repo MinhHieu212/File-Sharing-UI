@@ -18,32 +18,22 @@ const ClientGui = () => {
     "giaitich.pdf",
     "hopdong.pdf",
     "report.docx",
-    "giaitich.pdf",
-    "hopdong.pdf",
-    "report.docx",
-    "giaitich.pdf",
-    "hopdong.pdf",
-    "report.docx",
-    "hopdong.pdf",
-    "report.docx",
-    "giaitich.pdf",
-    "hopdong.pdf",
-    "report.docx",
-    "hopdong.pdf",
-    "report.docx",
-    "giaitich.pdf",
-    "hopdong.pdf",
-    "report.docx",
-    "hopdong.pdf",
-    "report.docx",
-    "giaitich.pdf",
-    "hopdong.pdf",
-    "report.docx",
+    // ... add more files as needed
   ]);
   const [fileOnRepo, setFileOnRepo] = useState([]);
 
   useEffect(() => {
-    setFileOnRepo(RepositoryApi.getList());
+    // Fetch fileOnRepo data from your API
+    const fetchDataFromAPI = async () => {
+      try {
+        const response = await RepositoryApi.getList(); // Ensure this API call returns an array of file names
+        setFileOnRepo("Success", response); // Assuming response.data is an array of file names
+      } catch (error) {
+        console.error("Error fetching data from API:", error);
+      }
+    };
+
+    fetchDataFromAPI();
   }, []);
 
   return (
