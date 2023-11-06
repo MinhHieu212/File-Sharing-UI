@@ -9,14 +9,14 @@ const HostnameApi = {
 
   register(data) {
     const path = "/api/register";
-
-    return MainServerApi.post(path, data);
+    console.log(JSON.stringify(data));
+    return MainServerApi.post(path, JSON.stringify(data));
   },
 
   login(data) {
     const path = "/api/login";
-
-    return MainServerApi.post(path, data);
+    console.log(JSON.stringify(data));
+    return MainServerApi.post(path, JSON.stringify(data));
   },
 
   ping(command) {

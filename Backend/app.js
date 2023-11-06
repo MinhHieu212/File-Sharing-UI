@@ -1,27 +1,15 @@
-<<<<<<< HEAD
 const express = require("express");
 const cors = require("cors");
 const net = require("net");
-// const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const {
   controllerCommand,
   controllerClient,
 } = require("./controller/controllerAdmin.js");
 const login = require("./controller/login");
 const register = require("./controller/register");
-require("dotenv").config();
-=======
-const express = require('express');
-const cors = require('cors');
-const net = require('net');
-const bodyParser = require('body-parser');
-const {controllerCommand, controllerClient} = require('./controller/controllerAdmin.js');
-const login=require("./controller/login")
-const register=require("./controller/register")
 const multer = require("multer");
-require('dotenv').config();
->>>>>>> e0a610a63b52803a20ccc35636039f171b88d212
-
+require("dotenv").config();
 
 const app = express();
 
@@ -29,16 +17,11 @@ const app = express();
 app.use(
   cors({
     origin: "*",
-<<<<<<< HEAD
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-=======
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-}))
-var upload = multer()
-app.use(upload.array())
->>>>>>> e0a610a63b52803a20ccc35636039f171b88d212
+var upload = multer();
+app.use(upload.array());
 app.use(express.json());
 app.use(express.urlencoded({ extends: true }));
 
@@ -66,17 +49,11 @@ app.post("/api/user", async (req, res) => {
   await controllerCommand(req, res);
 });
 
-<<<<<<< HEAD
-// Đăng nhập
+// Đăng nhập , Đăng kí
 app.post("/api/login", login);
 app.post("/api/register", register);
-=======
-// Đăng nhập , Đăng kí
-app.post('/api/login', login)
-app.post('/api/register', register);
-// Tìm kiếm file 
-app.get('/api/login', login)
->>>>>>> e0a610a63b52803a20ccc35636039f171b88d212
+// Tìm kiếm file
+app.get("/api/login", login);
 
 const PORT = 5000;
 

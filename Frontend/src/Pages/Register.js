@@ -8,7 +8,7 @@ import HostnameApi from "../APIs/MainServerAPI/HostnameApi";
 
 const schema = yup.object().shape({
   hostname: yup.string().required("hostname is required"),
-  password: yup.string().min(6).max(32).required("password is required"),
+  password: yup.string().min(3).max(32).required("password is required"),
   confirmPwd: yup
     .string()
     .oneOf([yup.ref("password"), null], "passwords must match")
@@ -25,15 +25,17 @@ const Register = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const navigate = useNavigate();
 
-  // Gửi thông tin đến BE
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await HostnameApi.register(data);
 
-    const reply = HostnameApi.register(data);
-    console.log(reply);
-
-    if (!Object.keys(errors).length && reply === "abc") {
-      navigate("/Login");
+      if (response.status === 200) {
+        navigate("/Login");
+      } else {
+        console.log("Register failed with status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
     }
   };
 

@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import CenterModal from "./CenterModal";
+import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
 
-const ModalConfirmUpload = ({ children, message }) => {
+const ModalConfirmUpload = ({ children, message, file }) => {
   const [openModal, setOpenModal] = useState(false);
+
   const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  const handleConfirm = () => {
+    const formData = new FormData();
+    formData.append("file", file);
+    RepositoryApi.addFile(formData);
     setOpenModal(false);
   };
 
@@ -25,7 +34,10 @@ const ModalConfirmUpload = ({ children, message }) => {
             >
               Hủy bỏ
             </button>
-            <button className="bg-[#4a4a8e] p-3 w-[40%] block rounded-lg text-[20px] font-semibold text-white">
+            <button
+              className="bg-[#4a4a8e] p-3 w-[40%] block rounded-lg text-[20px] font-semibold text-white"
+              onClick={handleConfirm}
+            >
               Xác nhận
             </button>
           </div>

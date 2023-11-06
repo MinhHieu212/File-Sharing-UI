@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { SearchIcon, UploadIcon } from "../Icons/Icons";
 import { CommunityFileItem, RepoFileItem } from "../Components/FileItem";
 import Header from "../Components/Header";
 import ModalConfirmUpload from "../Components/ModalConfirmUpload";
-import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
 
 const FileOnSystem = [
   "giaitich.pdf",
@@ -40,6 +39,8 @@ const FileOnRepo = [
 ];
 
 const ClientGui = () => {
+  const [file, setFile] = useState();
+
   return (
     <div className="homeContainter w-[1200px] h-[900px] rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
       <Header></Header>
@@ -75,13 +76,12 @@ const ClientGui = () => {
               type="file"
               className="rounded-md mx-2 font-semibold text-[blue]"
               onChange={(event) => {
-                const file = event.target.files[0];
-                const formData = new FormData();
-                formData.append("file", file);
-                RepositoryApi.addFile(formData);
+                const selectedFile = event.target.files[0];
+                setFile(selectedFile);
+                console.log(selectedFile.name);
               }}
             />
-            <ModalConfirmUpload message={"Confirm upload this [file]"}>
+            <ModalConfirmUpload message={`Confirm upload File`} file={file}>
               <UploadIcon></UploadIcon>
             </ModalConfirmUpload>
           </div>

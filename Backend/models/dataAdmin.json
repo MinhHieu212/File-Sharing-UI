@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "client": [
     {
@@ -19,10 +18,6 @@
       "port": 3001,
       "file": ["file2.txt", "file2.txt"]
     },
-    { "hostname": "localhost2", "password": "18072003", "localIp": "1" },
-    { "localIp": "1" }
+    { "hostname": "admin123", "password": "admin123", "localIp": "1" }
   ]
 }
-=======
-{"client":[{"hostname":"localhost","port":4001,"password":"123","file":["file1.txt","file2.txt"]},{"hostname":"Don2512","password":"123","port":3001,"file":["file1.txt","file2.txt"]},{"hostname":"localhost1","password":"123","port":3001,"file":["file2.txt","file2.txt"]},{"hostname":"localhost2","password":"18072003","localIp":"1"},{"hostname":"localhost3","password":"123","localIp":"1"}]}
->>>>>>> e0a610a63b52803a20ccc35636039f171b88d212

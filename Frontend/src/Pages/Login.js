@@ -7,30 +7,30 @@ import * as yup from "yup";
 import HostnameApi from "../APIs/MainServerAPI/HostnameApi";
 
 const schema = yup.object().shape({
-  hostname: yup.string().required("hostname is required"),
-  password: yup.string().min(2).max(32).required("password is required"),
+  hostname: yup.string().required("Hostname is required"),
+  password: yup.string().min(2).max(32).required("Password is required"),
 });
 
 const Login = () => {
-  const {
-    formState: { errors },
-    register,
-    handleSubmit,
-  } = useForm({ resolver: yupResolver(schema) });
+  const { formState, register, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const navigate = useNavigate();
 
-  // Gửi thông tin đến BE và nhận về token -> lưu token vào local storage
-  const onSubmit = (data) => {
-    localStorage.setItem("hostname", data.hostname);
-    localStorage.setItem("password", data.password);
-    console.log(data);
-
-    const reply = HostnameApi.login(data);
-    console.log(reply);
-
-    if (!Object.keys(errors).length && reply === "abc") {
-      navigate("/UserGui");
+  const onSubmit = async (data) => {
+    try {
+      const response = await HostnameApi.login(data);
+      if (response.status === 200) {
+        localStorage.setItem("hostname", data.hostname);
+        localStorage.setItem("password", data.password);
+        navigate("/UserGui");
+      } else {
+        console.log("Login failed with status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      console.log(error.response.data);
     }
   };
 
@@ -58,7 +58,7 @@ const Login = () => {
             className="w-[400px] h-[60px] bg-[white] text-[24px]  px-4 outline-none rounded-lg"
           />
           <span className="text-[orange] text-[24px]">
-            {errors?.hostname?.message}
+            {formState.errors.hostname?.message}
           </span>
         </div>
 
@@ -77,7 +77,7 @@ const Login = () => {
             className="w-[400px] h-[60px] bg-[white] text-[24px]  px-4 outline-none rounded-lg"
           />
           <span className="text-[orange] text-[24px]">
-            {errors?.password?.message}
+            {formState.errors.password?.message}
           </span>
         </div>
 
