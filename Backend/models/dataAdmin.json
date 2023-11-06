@@ -1,1 +1,29 @@
-{"client":[{"hostname":"localhost","port":4001,"password":"123","isActive":true,"file":["excel.txt","dog.txt"],"localIp":"1"},{"hostname":"Don2512","password":"123","isActive":true,"port":3001,"file":["file3.txt","file4.txt"],"localIp":"1"},{"hostname":"localhost1","password":"123","isActive":true,"port":3001,"file":["file5.txt","file6.txt"]},{"hostname":"localhost2","password":"18072003","localIp":"1"},{"hostname":"localhost3","password":"123","localIp":"1"}]}
+{
+  "client": [
+    {
+      "hostname": "localhost",
+      "port": 4001,
+      "password": "123",
+      "isActive": true,
+      "file": ["excel.txt", "dog.txt"],
+      "localIp": "1"
+    },
+    {
+      "hostname": "Don2512",
+      "password": "123",
+      "isActive": true,
+      "port": 3001,
+      "file": ["file3.txt", "file4.txt"],
+      "localIp": "1"
+    },
+    {
+      "hostname": "localhost1",
+      "password": "123",
+      "isActive": true,
+      "port": 3001,
+      "file": ["file5.txt", "file6.txt"]
+    },
+    { "hostname": "localhost2", "password": "18072003", "localIp": "1" },
+    { "hostname": "localhost3", "password": "123", "localIp": "1" }
+  ]
+}

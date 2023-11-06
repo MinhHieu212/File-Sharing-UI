@@ -2,8 +2,7 @@ import MainServerApi from "./MainServerApi";
 
 const HostnameApi = {
   getList() {
-    const path = "/hostname";
-
+    const path = "/api/all-current-files";
     return MainServerApi.get(path);
   },
 

@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import CenterModal from "./CenterModal";
 import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
 
-const ModalConfirmUpload = ({ children, message, file }) => {
+const ModalConfirmUpload = ({ children, message, file, handleReload }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleClose = () => {
     setOpenModal(false);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("file", file);
-    RepositoryApi.addFile(formData);
+    await RepositoryApi.addFile(formData);
     setOpenModal(false);
+    await handleReload();
   };
 
   return (
