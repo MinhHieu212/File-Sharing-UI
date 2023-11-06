@@ -18,6 +18,8 @@ app.post("/fetch",(req,res)=>{
     node.connect(clientIP,Number(clientPort), () => {
         console.log(`Connection to ${clientIP} established.`);
       })
-    node.fetchFile({ fileName })
+      setTimeout(() => {                        // chưa giải quyết vấn đề async được nên ta dùng tạm thằng setTimeout
+        node.fetchFile({ fileName });
+      }, 1000);
 })
 app.listen("8080",()=>{console.log("im running on 8080");})

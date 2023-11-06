@@ -5,7 +5,7 @@ const fs = require("fs");
 const path=require("path")
 const random4digithex = () => Math.random().toString(16).split('.')[1].substr(0, 4);
 const randomuuid = () => new Array(8).fill(0).map(() => random4digithex()).join('-');
-
+const localIP=require("./locallP")
 module.exports = (options) => {
 
   const connections = new Map();
@@ -14,8 +14,8 @@ module.exports = (options) => {
   console.log("My Node_ID: "+NODE_ID);
   const neighbors = new Map();
   var out
-  var MY_IP="192.168.100.252"
-  //gắn socket với id cụ thể đồng thời tạo event cho process và event cho socket
+  var MY_IP=localIP()      // remember your IP local will change
+  //gắn socket với id cụ thể đồng thời tạo event cho proces.s và event cho socket
   const handleNewSocket = (socket) => {
     const socketId = randomuuid();
     connections.set(socketId, socket);    //id cua socket
@@ -35,14 +35,15 @@ module.exports = (options) => {
         {
           emitter.emit('receive_handshake_nodeId', { socketId, message: JSON.parse(data.toString())});
         }
-        else if (message.type=="message")            //client xử lí
+        else if (message.type=="message")            //client xử lí: receiver
         { 
           if(message.data.type=="send")
           {
             console.log("From the server to client");
             console.log(message);
             const fileName=message.data.message.fileName
-            const des = path.join(process.cwd(), "downloads", fileName);
+            console.log("current : " + process.cwd());
+            const des = path.join(__dirname, "../","downloads", fileName);
             out = fs.createWriteStream(des);
             const response={
               type: "confirmation",
@@ -57,14 +58,15 @@ module.exports = (options) => {
             sendFile({fileName})
           }
         }
-        else if (message.type=="confirmation")       //server xử lí
+        else if (message.type=="confirmation")       //server xử lí : sender
         {
           console.log("From the client to server");
           console.log(message);
+          console.log("The ip of the receiver is: "+message.ip);
           const socket2 = new net.Socket();
-          const address = path.join(process.cwd(), "repo", message.fileName);
+          const address = path.join(__dirname,"../" ,"repo", message.fileName);
           const fileStream = fs.createReadStream(address);
-          socket2.connect(3001,message.ip, function () {   
+          socket2.connect(4001,message.ip, function () {   
                  // cần xet ip là 1 biến
             fileStream.pipe(socket2)                // server quăng data cho client
                 .on('finish', function () {
@@ -124,7 +126,7 @@ module.exports = (options) => {
   const connect = (ip, port, cb) => {
     const socket = new net.Socket();
     console.log(ip,"======================");
-    socket.connect(port, ip, () => {
+     socket.connect(port, ip, () => {
       handleNewSocket(socket);
       cb && cb();
     });
@@ -171,7 +173,7 @@ module.exports = (options) => {
     findSocketIdWithNodeIdAndSend({ id, ttl, type: 'send', message, origin });
   };
   const fetchFile = (message, id = randomuuid(), origin = NODE_ID, ttl = 255) => {
-    console.log("in sendFile" + NODE_ID);
+    console.log("in fetchFile " + NODE_ID);
     console.log(neighbors.keys());
     findSocketIdWithNodeIdAndSend({ id, ttl, type: 'fetch', message, origin });
   };
