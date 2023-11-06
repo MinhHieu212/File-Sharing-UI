@@ -5,33 +5,6 @@ import Header from "../Components/Header";
 import ModalConfirmUpload from "../Components/ModalConfirmUpload";
 import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
 
-// const FileOnSystem = [
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-// ];
-
 // const FileOnRepo = [
 //   "giaitich.pdf",
 //   "hopdong.pdf",
@@ -41,24 +14,36 @@ import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
 
 const ClientGui = () => {
   const [file, setFile] = useState();
-  const [fileOnSystem, setFileOnSystem] = useState([]);
+  const [fileOnSystem, setFileOnSystem] = useState([
+    "giaitich.pdf",
+    "hopdong.pdf",
+    "report.docx",
+    "giaitich.pdf",
+    "hopdong.pdf",
+    "report.docx",
+    "giaitich.pdf",
+    "hopdong.pdf",
+    "report.docx",
+    "hopdong.pdf",
+    "report.docx",
+    "giaitich.pdf",
+    "hopdong.pdf",
+    "report.docx",
+    "hopdong.pdf",
+    "report.docx",
+    "giaitich.pdf",
+    "hopdong.pdf",
+    "report.docx",
+    "hopdong.pdf",
+    "report.docx",
+    "giaitich.pdf",
+    "hopdong.pdf",
+    "report.docx",
+  ]);
   const [fileOnRepo, setFileOnRepo] = useState([]);
 
   useEffect(() => {
-    const fetchDataFromAPI = async () => {
-      try {
-        const response = await RepositoryApi.getList();
-        if (response.status === 200) {
-          console.log("success");
-        } else {
-          console.log("Fail");
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-        console.log("Fail");
-      }
-    };
-    fetchDataFromAPI();
+    setFileOnRepo(RepositoryApi.getList());
   }, []);
 
   return (
