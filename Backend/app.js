@@ -1,68 +1,69 @@
-const express = require('express');
-const cors = require('cors');
-const net = require('net');
+const express = require("express");
+const cors = require("cors");
+const net = require("net");
 // const bodyParser = require('body-parser');
-const {controllerCommand, controllerClient} = require('./controller/controllerAdmin.js');
-const login=require("./controller/login")
-const register=require("./controller/register")
-require('dotenv').config();
+const {
+  controllerCommand,
+  controllerClient,
+} = require("./controller/controllerAdmin.js");
+const login = require("./controller/login");
+const register = require("./controller/register");
+require("dotenv").config();
 
 const app = express();
 
-
 // xác thực khi dùng APIs
-app.use(cors({
+app.use(
+  cors({
     origin: "*",
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-}))
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 app.use(express.json());
-app.use(express.urlencoded({extends : true}));
+app.use(express.urlencoded({ extends: true }));
 
 // frontend và backend của server
-app.post('/api/admin', async (req, res) => {
+app.post("/api/admin", async (req, res) => {
   const receivedData = req.body; // Dữ liệu JSON được gửi từ phía Frontend
   // Xử lý dữ liệu ở đây
-  console.log('Received data:', receivedData);
+  console.log("Received data:", receivedData);
   await controllerCommand(req, res);
 });
 
 // server và client
-app.post('/api/server', async (req, res) => {
+app.post("/api/server", async (req, res) => {
   const receivedData = req.body; // Dữ liệu JSON được gửi từ phía Frontend
   // Xử lý dữ liệu ở đây
-  console.log('Received data:', receivedData);
+  console.log("Received data:", receivedData);
   await controllerCommand(req, res);
 });
 
-
 // frontend và backend của Client
-app.post('/api/user', async (req, res) => {
+app.post("/api/user", async (req, res) => {
   const receivedData = req.body; // Dữ liệu JSON được gửi từ phía Frontend
   // Xử lý dữ liệu ở đây
-  console.log('Received data:', receivedData);
+  console.log("Received data:", receivedData);
   await controllerCommand(req, res);
 });
 
 // Đăng nhập
-app.post('/ap1/login', login)
-app.post('/api/register', register);
+app.post("/api/login", login);
+app.post("/api/register", register);
 
-
-  
-const PORT = 3001;
+const PORT = 5000;
 
 const listener = app.listen(PORT, () => {
-  console.log("Server listening for connection requests on port " + listener.address().port);
+  console.log(
+    "Server listening for connection requests on port " +
+      listener.address().port
+  );
 });
-
 
 // const server = new net.Server();
 // exports.server = server;
 // server.listen({port: 4002, host: 'localhost' }, function() {
 //     console.log("Server listening for connection requests on socket");
 // });
-
-
 
 // // nhận kết nối tcp
 // server.on('connection', function(socket) {

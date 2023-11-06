@@ -8,7 +8,7 @@ const RepositoryApi = {
   },
 
   addFile(data) {
-    const path = "/repository";
+    const path = "/uploadRepo";
 
     return ClientServerApi.post(path, data);
   },

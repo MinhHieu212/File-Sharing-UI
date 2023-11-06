@@ -8,13 +8,13 @@ const HostnameApi = {
   },
 
   register(data) {
-    const path = "/hostname";
+    const path = "/api/register";
 
     return MainServerApi.post(path, data);
   },
 
   login(data) {
-    const path = "/hostname";
+    const path = "/api/login";
 
     return MainServerApi.post(path, data);
   },

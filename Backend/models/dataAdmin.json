@@ -18,6 +18,7 @@
       "port": 3001,
       "file": ["file2.txt", "file2.txt"]
     },
-    { "hostname": "localhost2", "password": "18072003", "localIp": "1" }
+    { "hostname": "localhost2", "password": "18072003", "localIp": "1" },
+    { "localIp": "1" }
   ]
 }

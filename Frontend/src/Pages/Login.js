@@ -4,10 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { MainLogo } from "../Icons/Icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import HostnameApi from "../APIs/MainServerAPI/HostnameApi";
 
 const schema = yup.object().shape({
   hostname: yup.string().required("hostname is required"),
-  password: yup.string().min(4).max(32).required("password is required"),
+  password: yup.string().min(2).max(32).required("password is required"),
 });
 
 const Login = () => {
@@ -25,7 +26,10 @@ const Login = () => {
     localStorage.setItem("password", data.password);
     console.log(data);
 
-    if (!Object.keys(errors).length) {
+    const reply = HostnameApi.login(data);
+    console.log(reply);
+
+    if (!Object.keys(errors).length && reply === "abc") {
       navigate("/UserGui");
     }
   };
