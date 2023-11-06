@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const {controllerCommand, controllerClient} = require('./controller/controllerAdmin.js');
 const login=require("./controller/login")
 const register=require("./controller/register")
+const getCurrentFiles=require("./controller/getCurrentFiles")
 const multer = require("multer");
 require('dotenv').config();
 
@@ -51,7 +52,7 @@ app.post('/api/user', async (req, res) => {
 app.post('/api/login', login)
 app.post('/api/register', register);
 // Tìm kiếm file 
-app.get('/api/login', login)
+app.get('/api/current-files', getCurrentFiles)
 
 const PORT = 5000;
 
