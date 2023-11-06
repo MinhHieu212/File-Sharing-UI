@@ -2,7 +2,7 @@ import React from "react";
 import { SearchIcon, UploadIcon } from "../Icons/Icons";
 import { CommunityFileItem, RepoFileItem } from "../Components/FileItem";
 import Header from "../Components/Header";
-import Modal from "../Components/Modal";
+import ModalConfirmUpload from "../Components/ModalConfirmUpload";
 
 const FileOnSystem = [
   "giaitich.pdf",
@@ -70,12 +70,16 @@ const ClientGui = () => {
           </h1>
           <div className="Search text-[25px] bg-white rounded-md w-[90%] h-[60px] flex items-center justify-between mx-auto mt-4 overflow-hidden px-4">
             <input
+              id="newFile"
               type="file"
               className="rounded-md mx-2 font-semibold text-[blue]"
+              onChange={(event) => {
+                console.log(event.target.files[0]);
+              }}
             />
-            <Modal message={"Confirm upload this [file]"}>
+            <ModalConfirmUpload message={"Confirm upload this [file]"}>
               <UploadIcon></UploadIcon>
-            </Modal>
+            </ModalConfirmUpload>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto  overflow-y-auto">
             {FileOnRepo.map((fileName, index) => (
