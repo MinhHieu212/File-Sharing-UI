@@ -2,7 +2,7 @@ import ClientServerApi from "./ClientServerApi";
 
 const RepositoryApi = {
   getList() {
-    const path = "/repository";
+    const path = "/hostRepo";
 
     return ClientServerApi.get(path);
   },

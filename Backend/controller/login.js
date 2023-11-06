@@ -1,7 +1,13 @@
 const { readFile, writeFile, readFull } = require("../models/dataAdmin.js");
+<<<<<<< HEAD
 const path = require("path");
 
 async function login(req, res) {
+=======
+const path=require("path")
+// khi login vào thì cần phải vào db thay cái ip address nhé
+async function login(req,res){
+>>>>>>> 53848301ce709ca32a059b84a8ded12d56e20c77
   console.log(req.body);
   const hostname = req.body.hostname;
   const password = req.body.password;
