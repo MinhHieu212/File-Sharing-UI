@@ -39,7 +39,7 @@ app.get("/hostRepo",(req,res)=>{
     }
     // `files` is an array containing the names of all files in the directory
     console.log('Files in the folder:');
-    console.log(files);
+    return res.status(200).json({files})
   });
 })
 

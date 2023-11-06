@@ -5,7 +5,8 @@
       "port": 4001,
       "password": "123",
       "isActive": true,
-      "file": ["excel.txt", "dog.txt"]
+      "file": ["excel.txt", "dog.txt"],
+      "localIp": "1"
     },
     {
       "hostname": "Don2512",
