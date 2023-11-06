@@ -4,20 +4,24 @@
       "hostname": "localhost",
       "port": 4001,
       "password": "123",
-      "file": ["file1.txt", "file2.txt"]
+      "isActive": true,
+      "file": ["excel.txt", "dog.txt"]
     },
     {
       "hostname": "Don2512",
       "password": "123",
+      "isActive": true,
       "port": 3001,
-      "file": ["file1.txt", "file2.txt"]
+      "file": ["file3.txt", "file4.txt"]
     },
     {
       "hostname": "localhost1",
       "password": "123",
+      "isActive": true,
       "port": 3001,
-      "file": ["file2.txt", "file2.txt"]
+      "file": ["file5.txt", "file6.txt"]
     },
-    { "hostname": "admin123", "password": "admin123", "localIp": "1" }
+    { "hostname": "localhost2", "password": "18072003", "localIp": "1" },
+    { "hostname": "localhost3", "password": "123", "localIp": "1" }
   ]
 }
