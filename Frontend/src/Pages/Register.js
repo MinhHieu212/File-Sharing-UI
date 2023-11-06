@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { MainLogo } from "../Icons/Icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import HostnameApi from "../APIs/MainServerAPI/HostnameApi";
+import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
 
 const schema = yup.object().shape({
   hostname: yup.string().required("hostname is required"),
@@ -27,7 +27,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await HostnameApi.register(data);
+      const response = await ServerServiceApi.register(data);
 
       if (response.status === 200) {
         navigate("/Login");

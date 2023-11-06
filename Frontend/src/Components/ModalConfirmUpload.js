@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import CenterModal from "./CenterModal";
-import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
+import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
+import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
 
-const ModalConfirmUpload = ({ children, message, file, handleReload }) => {
+const ModalConfirmUpload = ({
+  children,
+  message,
+  file,
+  handleReloadSystem,
+  handleReloadRepo,
+  hostName,
+}) => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleClose = () => {
@@ -12,9 +20,20 @@ const ModalConfirmUpload = ({ children, message, file, handleReload }) => {
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("file", file);
+    // them file moi vao repo cua client
     await RepositoryApi.addFile(formData);
+    // call api thong bao den server
+
+    const fileInfo = {
+      hostname: hostName,
+      file: file?.name,
+    };
+
+    await ServerServiceApi.uploadFileInfo(fileInfo);
+
     setOpenModal(false);
-    await handleReload();
+    await handleReloadRepo();
+    await handleReloadSystem();
   };
 
   return (

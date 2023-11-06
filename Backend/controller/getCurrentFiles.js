@@ -10,13 +10,12 @@ async function getCurrentFiles(req, res) {
   for (var i = 0; i < data.length; i++) {
     if (data[i]?.isActive) {
       if (data[i].file.length > 0) {
-        for(var j=0;j<data[i].file.length;j++)
-        {
-          const item={
+        for (var j = 0; j < data[i].file.length; j++) {
+          const item = {
             file: data[i].file[j],
-            localIp: data[i].localIp
-          }
-        currentFiles = currentFiles.concat(item);
+            localIp: data[i].localIp,
+          };
+          currentFiles = currentFiles.concat(item);
         }
       }
     }

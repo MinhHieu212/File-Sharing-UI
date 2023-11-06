@@ -3,43 +3,29 @@ import { SearchIcon, UploadIcon } from "../Icons/Icons";
 import { CommunityFileItem, RepoFileItem } from "../Components/FileItem";
 import Header from "../Components/Header";
 import ModalConfirmUpload from "../Components/ModalConfirmUpload";
-import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
-import HostnameApi from "../APIs/MainServerAPI/HostnameApi";
+import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
+import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
 
 const ClientGui = () => {
   const [file, setFile] = useState();
-  const [fileOnSystem, setFileOnSystem] = useState([
-    "giaitich.pdf",
-    "hopdong.pdf",
-    "report.docx",
-  ]);
+  const [fileOnSystem, setFileOnSystem] = useState([]);
+  const [fileOnRepo, setFileOnRepo] = useState([]);
+  const hostName = localStorage.getItem("hostname");
 
-  const [fileOnRepo, setFileOnRepo] = useState([
-    "giaitich.pdf",
-    "hopdong.pdf",
-    "report.docx",
-  ]);
-
-  const fetchDataFromAPI = async () => {
-    console.log("repository");
+  const fetchListFileOnRepository = async () => {
     try {
       const response = await RepositoryApi.getList();
       setFileOnRepo(response.data.files); // Assuming response.data is an array of file names
-      console.log(fileOnRepo);
+      // console.log("ALL FIlE ON REPOSITORY", response.data.files);
     } catch (error) {
       console.error("Error fetching data from API:", error);
     }
   };
 
-  useEffect(() => {
-    // Fetch fileOnRepo data from your API
-    fetchDataFromAPI();
-  }, []);
-
-  const fetchDataFromAPI2 = async () => {
+  const fetchListFileOnServer = async () => {
     try {
-      const response = await HostnameApi.getList();
-      console.log("all cuerrnet fiel ", response.data.currentFiles);
+      const response = await ServerServiceApi.getListFile();
+      // console.log("ALL FIlE ON SYSTEM", response.data.currentFiles);
       setFileOnSystem(response.data.currentFiles);
     } catch (error) {
       console.error("Error fetching data from API:", error);
@@ -47,11 +33,15 @@ const ClientGui = () => {
   };
 
   useEffect(() => {
-    // Fetch fileOnRepo data from your API
-    fetchDataFromAPI2();
-  }, []);
+    const intervalId = setInterval(() => {
+      fetchListFileOnServer();
+    }, 100000);
 
-  console.log(fileOnRepo);
+    fetchListFileOnServer();
+    fetchListFileOnRepository();
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="homeContainter w-[1200px] h-[900px] rounded-lg bg-[#5A6465] shadow-lg shadow-cyan-500/50">
@@ -70,9 +60,10 @@ const ClientGui = () => {
             <SearchIcon></SearchIcon>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto overflow-y-auto">
-            {fileOnSystem.map((fileName, index) => (
+            {fileOnSystem.map((fileItem, index) => (
               <CommunityFileItem
-                fileName={fileName}
+                fileName={fileItem.file}
+                hostIp={fileItem.localIp}
                 key={index}
               ></CommunityFileItem>
             ))}
@@ -90,13 +81,15 @@ const ClientGui = () => {
               onChange={(event) => {
                 const selectedFile = event.target.files[0];
                 setFile(selectedFile);
-                console.log(selectedFile.name);
+                // console.log(selectedFile.name);
               }}
             />
             <ModalConfirmUpload
               message={`Confirm upload File`}
               file={file}
-              handleReload={fetchDataFromAPI}
+              hostName={hostName}
+              handleReloadRepo={fetchListFileOnRepository}
+              handleReloadSystem={fetchListFileOnServer}
             >
               <UploadIcon></UploadIcon>
             </ModalConfirmUpload>
