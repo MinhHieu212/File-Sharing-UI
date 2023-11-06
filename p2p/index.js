@@ -30,6 +30,26 @@ app.post("/fetch", (req, res) => {
 app.post("/uploadRepo", uploadRepo.single("file"), (req, res) => {
   res.send("Upload to Repo Success fully");
 });
+app.delete("/fileInRepo", (req, res) => {
+  const { fileName } = req.body;
+  // Check if fileName is provided in the request
+  if (!fileName) {
+    return res.status(400).json({ error: 'File name is required in the request body' });
+  }
+
+  // Construct the path to the file
+
+  const filePath =path.join(__dirname,"./repo",fileName)// Replace this with the actual path to your repository folder
+
+  // Use fs.unlink() to delete the file
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error('Error deleting file:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.status(200).send("File deleted successfully");
+  });
+});
 // sau khi upload thì gọi API lên serverBE để update db
 app.get("/hostRepo", (req, res) => {
   const folderPath = path.join(__dirname, "../p2p/repo");
