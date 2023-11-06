@@ -28,7 +28,7 @@ module.exports = (options) => {
     var reqBuffer = Buffer.from('');
 
     socket.on('data', (data) => {
-      message=JSON.parse(data.toString())
+      const message=JSON.parse(data.toString())
       console.log(message.type);
       try {
         if(message.type=="handshake")
@@ -37,17 +37,25 @@ module.exports = (options) => {
         }
         else if (message.type=="message")            //client xử lí
         { 
-          console.log("From the server to client");
-          console.log(message);
-          const fileName=message.data.message.fileName
-          const des = path.join(process.cwd(), "downloads", fileName);
-          out = fs.createWriteStream(des);
-          const response={
-            type: "confirmation",
-            ip: MY_IP,
-            fileName
+          if(message.data.type=="send")
+          {
+            console.log("From the server to client");
+            console.log(message);
+            const fileName=message.data.message.fileName
+            const des = path.join(process.cwd(), "downloads", fileName);
+            out = fs.createWriteStream(des);
+            const response={
+              type: "confirmation",
+              ip: MY_IP,
+              fileName
+            }
+            socket.write(JSON.stringify(response))
+        }
+          else if(message.data.type=="fetch")
+          {
+            const fileName= message.data.message.fileName
+            sendFile({fileName})
           }
-          socket.write(JSON.stringify(response))
         }
         else if (message.type=="confirmation")       //server xử lí
         {
@@ -147,7 +155,7 @@ module.exports = (options) => {
   };
 
 
-  const sendFileToAllConnectedNode = (packet) => {
+  const findSocketIdWithNodeIdAndSend = (packet) => {
     console.log("sendFileToAllConnectedNode----");
     console.log(neighbors.keys());
     for (const nodeId of neighbors.keys()) {
@@ -160,7 +168,12 @@ module.exports = (options) => {
   const sendFile = (message, id = randomuuid(), origin = NODE_ID, ttl = 255) => {
     console.log("in sendFile" + NODE_ID);
     console.log(neighbors.keys());
-    sendFileToAllConnectedNode({ id, ttl, type: 'file', message, origin });
+    findSocketIdWithNodeIdAndSend({ id, ttl, type: 'send', message, origin });
+  };
+  const fetchFile = (message, id = randomuuid(), origin = NODE_ID, ttl = 255) => {
+    console.log("in sendFile" + NODE_ID);
+    console.log(neighbors.keys());
+    findSocketIdWithNodeIdAndSend({ id, ttl, type: 'fetch', message, origin });
   };
 
 
@@ -190,6 +203,7 @@ module.exports = (options) => {
 
   return {
     listen, connect, close,
+    fetchFile,
     on: emitter.on.bind(emitter),
     off: emitter.off.bind(emitter),
     id: NODE_ID,

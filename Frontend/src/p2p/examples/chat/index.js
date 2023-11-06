@@ -23,7 +23,7 @@ let name =
   randomItem(["Paris", "Berlin", "Belgrade", "Ljubljana"]);
 
 // Start local node and print help
-node.listen(port1,port2, () => {
+node.listen(port1, port2, () => {
   console.log(`Chat node is up at port ${port1}.`);
   console.log(``);
   console.log(`Write "connect IP:PORT" to connect to other nodes.`);
@@ -61,6 +61,10 @@ node.listen(port1,port2, () => {
       var fileName;
       [, fileName] = text.split(" ");
       node.sendFile({ fileName });
+    } else if (text.startsWith("fetch")) {
+      var fileName;
+      [, fileName] = text.split(" ");
+      node.fetchFile({ fileName });
     } else {
       node.chat({ name, text });
       console.log(`${"\033[F"}You: ${text}`);
