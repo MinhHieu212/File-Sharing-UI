@@ -2,11 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const net = require('net');
 // const bodyParser = require('body-parser');
-const {controllerCommand, controllerToClinet} = require('./controller/controllerAdmin.js');
+const {controllerCommand, controllerClient} = require('./controller/controllerAdmin.js');
 const login=require("./controller/login")
+const register=require("./controller/register")
 require('dotenv').config();
 
 const app = express();
+
 
 // xác thực khi dùng APIs
 app.use(cors({
@@ -15,7 +17,6 @@ app.use(cors({
 }))
 app.use(express.json());
 app.use(express.urlencoded({extends : true}));
-// app.use(bodyParser.urlencoded({ extended: true }));
 
 // frontend và backend của server
 app.post('/api/admin', async (req, res) => {
@@ -43,7 +44,9 @@ app.post('/api/user', async (req, res) => {
 });
 
 // Đăng nhập
-app.post('/ap1/login',login)
+app.post('/ap1/login', login)
+app.post('/api/register', register);
+
 
   
 const PORT = 3001;
