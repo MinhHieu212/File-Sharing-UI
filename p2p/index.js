@@ -25,6 +25,7 @@ app.post("/fetch", (req, res) => {
   setTimeout(() => {
     // chưa giải quyết vấn đề async được nên ta dùng tạm thằng setTimeout
     node.fetchFile({ fileName });
+    res.status(200).send("File Received !!")
   }, 1000);
 });
 app.post("/uploadRepo", uploadRepo.single("file"), (req, res) => {
@@ -59,7 +60,7 @@ app.get("/hostRepo", (req, res) => {
       return;
     }
     // `files` is an array containing the names of all files in the directory
-    return res.status(200).json({files})
+    return res.status(200).json({ files });
   });
 });
 

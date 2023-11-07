@@ -2,18 +2,23 @@ const net = require("net");
 const EventEmitter = require("events");
 // const splitStream = require('./split-stream');
 const fs = require("fs");
-const path=require("path")
-const random4digithex = () => Math.random().toString(16).split('.')[1].substr(0, 4);
-const randomuuid = () => new Array(8).fill(0).map(() => random4digithex()).join('-');
-const localIP=require("./locallP")
+const path = require("path");
+const random4digithex = () =>
+  Math.random().toString(16).split(".")[1].substr(0, 4);
+const randomuuid = () =>
+  new Array(8)
+    .fill(0)
+    .map(() => random4digithex())
+    .join("-");
+const localIP = require("./locallP");
 module.exports = (options) => {
   const connections = new Map();
   const emitter = new EventEmitter();
   const NODE_ID = randomuuid();
   console.log("My Node_ID: " + NODE_ID);
   const neighbors = new Map();
-  var out
-  var MY_IP=localIP()      // remember your IP local will change
+  var out;
+  var MY_IP = localIP(); // remember your IP local will change
   //gắn socket với id cụ thể đồng thời tạo event cho proces.s và event cho socket
   const handleNewSocket = (socket) => {
     const socketId = randomuuid();
@@ -30,19 +35,19 @@ module.exports = (options) => {
       const message = JSON.parse(data.toString());
       console.log(message.type);
       try {
-        if(message.type=="handshake")
-        {
-          emitter.emit('receive_handshake_nodeId', { socketId, message: JSON.parse(data.toString())});
-        }
-        else if (message.type=="message")            //client xử lí: receiver
-        { 
-          if(message.data.type=="send")
-          {
+        if (message.type == "handshake") {
+          emitter.emit("receive_handshake_nodeId", {
+            socketId,
+            message: JSON.parse(data.toString()),
+          });
+        } else if (message.type == "message") {
+          //client xử lí: receiver
+          if (message.data.type == "send") {
             console.log("From the server to client");
             console.log(message);
-            const fileName=message.data.message.fileName
+            const fileName = message.data.message.fileName;
             console.log("current : " + process.cwd());
-            const des = path.join(__dirname, "../","downloads", fileName);
+            const des = path.join(__dirname, "../", "repo", fileName); //download
             out = fs.createWriteStream(des);
             const response = {
               type: "confirmation",
@@ -54,29 +59,29 @@ module.exports = (options) => {
             const fileName = message.data.message.fileName;
             sendFile({ fileName });
           }
-        }
-        else if (message.type=="confirmation")       //server xử lí : sender
-        {
+        } else if (message.type == "confirmation") {
+          //server xử lí : sender
           console.log("From the client to server");
           console.log(message);
-          console.log("The ip of the receiver is: "+message.ip);
+          console.log("The ip of the receiver is: " + message.ip);
           const socket2 = new net.Socket();
-          const address = path.join(__dirname,"../" ,"repo", message.fileName);
+          const address = path.join(__dirname, "../", "repo", message.fileName);
           const fileStream = fs.createReadStream(address);
-          socket2.connect(3001,message.ip, function () {                      // IF test local chang 3001 to 4001
-                 // cần xet ip là 1 biến
-            fileStream.pipe(socket2)                // server quăng data cho client
-                .on('finish', function () {
-                    console.log('File sent successfully.');
-                    console.log(neighbors.keys());
-                    socket2.end(); // Close the socket after sending the file
-                  console.log(neighbors.keys());
-
-                })
-                .on('error', function (err) {
-                    console.error('Error reading file:', err);
-                });
-        });
+          socket2.connect(3001, message.ip, function () {
+            // IF test local chang 3001 to 4001
+            // cần xet ip là 1 biến
+            fileStream
+              .pipe(socket2) // server quăng data cho client
+              .on("finish", function () {
+                console.log("File sent successfully.");
+                console.log(neighbors.keys());
+                socket2.end(); // Close the socket after sending the file
+                console.log(neighbors.keys());
+              })
+              .on("error", function (err) {
+                console.error("Error reading file:", err);
+              });
+          });
         }
         console.log("end on data -------------------------------");
       } catch (e) {
@@ -126,8 +131,8 @@ module.exports = (options) => {
 
   const connect = (ip, port, cb) => {
     const socket = new net.Socket();
-    console.log(ip,"======================");
-     socket.connect(port, ip, () => {
+    console.log(ip, "======================");
+    socket.connect(port, ip, () => {
       handleNewSocket(socket);
       cb && cb();
     });
@@ -172,7 +177,12 @@ module.exports = (options) => {
     console.log(neighbors.keys());
     findSocketIdWithNodeIdAndSend({ id, ttl, type: "send", message, origin });
   };
-  const fetchFile = (message, id = randomuuid(), origin = NODE_ID, ttl = 255) => {
+  const fetchFile = (
+    message,
+    id = randomuuid(),
+    origin = NODE_ID,
+    ttl = 255
+  ) => {
     console.log("in fetchFile " + NODE_ID);
     console.log(neighbors.keys());
     findSocketIdWithNodeIdAndSend({ id, ttl, type: "fetch", message, origin });

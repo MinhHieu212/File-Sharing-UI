@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { MainLogo } from "../Icons/Icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import HostnameApi from "../APIs/MainServerAPI/HostnameApi";
+import HostnameApi from "../APIs/ServerAPI/ServerServiceApi";
 
 const schema = yup.object().shape({
   hostname: yup.string().required("Hostname is required"),

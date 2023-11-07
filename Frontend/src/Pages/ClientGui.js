@@ -3,62 +3,44 @@ import { SearchIcon, UploadIcon } from "../Icons/Icons";
 import { CommunityFileItem, RepoFileItem } from "../Components/FileItem";
 import Header from "../Components/Header";
 import ModalConfirmUpload from "../Components/ModalConfirmUpload";
-import RepositoryApi from "../APIs/ClientServerAPI/RepositoryApi";
-
-// const FileOnSystem = [
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-// ];
-
-// const FileOnRepo = [
-//   "giaitich.pdf",
-//   "hopdong.pdf",
-//   "report.docx",
-//   "VoNhat.docx",
-// ];
+import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
+import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
 
 const ClientGui = () => {
   const [file, setFile] = useState();
   const [fileOnSystem, setFileOnSystem] = useState([]);
   const [fileOnRepo, setFileOnRepo] = useState([]);
+  const hostName = localStorage.getItem("hostname");
+
+  const fetchListFileOnRepository = async () => {
+    try {
+      const response = await RepositoryApi.getList();
+      setFileOnRepo(response.data.files); // Assuming response.data is an array of file names
+      // console.log("ALL FIlE ON REPOSITORY", response.data.files);
+    } catch (error) {
+      console.error("Error fetching data from API:", error);
+    }
+  };
+
+  const fetchListFileOnServer = async () => {
+    try {
+      const response = await ServerServiceApi.getListFile();
+      // console.log("ALL FIlE ON SYSTEM", response.data.currentFiles);
+      setFileOnSystem(response.data.currentFiles);
+    } catch (error) {
+      console.error("Error fetching data from API:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchDataFromAPI = async () => {
-      try {
-        const response = await RepositoryApi.getList();
-        if (response.status === 200) {
-          console.log("success");
-        } else {
-          console.log("Fail");
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-        console.log("Fail");
-      }
-    };
-    fetchDataFromAPI();
+    const intervalId = setInterval(() => {
+      fetchListFileOnServer();
+    }, 100000);
+
+    fetchListFileOnServer();
+    fetchListFileOnRepository();
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -78,9 +60,10 @@ const ClientGui = () => {
             <SearchIcon></SearchIcon>
           </div>
           <div className="Search p-4 text-[25px] bg-white rounded-lg w-[90%] h-[78%] mt-5 mx-auto overflow-y-auto">
-            {fileOnSystem.map((fileName, index) => (
+            {fileOnSystem.map((fileItem, index) => (
               <CommunityFileItem
-                fileName={fileName}
+                fileName={fileItem.file}
+                hostIp={fileItem.localIp}
                 key={index}
               ></CommunityFileItem>
             ))}
@@ -98,10 +81,16 @@ const ClientGui = () => {
               onChange={(event) => {
                 const selectedFile = event.target.files[0];
                 setFile(selectedFile);
-                console.log(selectedFile.name);
+                // console.log(selectedFile.name);
               }}
             />
-            <ModalConfirmUpload message={`Confirm upload File`} file={file}>
+            <ModalConfirmUpload
+              message={`Confirm upload File`}
+              file={file}
+              hostName={hostName}
+              handleReloadRepo={fetchListFileOnRepository}
+              handleReloadSystem={fetchListFileOnServer}
+            >
               <UploadIcon></UploadIcon>
             </ModalConfirmUpload>
           </div>

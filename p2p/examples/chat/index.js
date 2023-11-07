@@ -67,7 +67,7 @@ node.listen(port1, port2, () => {
       node.fetchFile({ fileName });
     } else {
       node.chat({ name, text });
-      console.log(`${"\033[F"}You: ${text}`);
+      console.log(`You: ${text}`);
     }
   });
 });

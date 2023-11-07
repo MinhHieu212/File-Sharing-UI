@@ -1,6 +1,6 @@
 const { readFile, writeFile, readFull } = require("../models/dataAdmin.js");
 const path = require("path");
-const fs=require("fs")
+const fs = require("fs");
 
 // khi login vào thì cần phải vào db thay cái ip address nhé
 async function login(req, res) {
@@ -23,6 +23,4 @@ async function login(req, res) {
   }
   return res.status(401).send("Login Failed, Unauthorized !");
 }
-module.exports = login;
-
 module.exports = login;
