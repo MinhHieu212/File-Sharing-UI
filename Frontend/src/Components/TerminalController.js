@@ -41,20 +41,48 @@ const TerminalController = (props = {}) => {
         const files = response.data.currentFiles;
         setTerminalLineData((prevData) => [
           ...prevData,
-          <TerminalOutput>{"$ myRepository"}</TerminalOutput>,
+          <TerminalOutput>{"$ communityFile"}</TerminalOutput>,
           <TerminalOutput>
             {"---------------------------------"}
           </TerminalOutput>,
           ...files.map((fileItem, index) => (
-            <TerminalOutput key={index * 100}>{fileItem.file}</TerminalOutput>
+            <TerminalOutput key={index}>{fileItem.file}</TerminalOutput>
           )),
         ]);
       } catch (error) {
         console.error(error);
       }
+    } else if (inputTokens[0] === "publish") {
+      if (inputTokens.length < 3) {
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          <TerminalOutput>{"Command Error"}</TerminalOutput>,
+        ]);
+      } else {
+        try {
+          const response = await RepositoryApi.publishFile({
+            lname: inputTokens[1],
+            fname: inputTokens[2],
+          });
+          console.log(response);
+
+          // gưi thong bao den main server
+
+          // cho thong bao upload thanh cong
+
+          setTerminalLineData((prevData) => [
+            ...prevData,
+            <TerminalOutput>{`$ publish ${inputTokens[1]} " " ${inputTokens[2]}`}</TerminalOutput>,
+            <TerminalOutput>
+              {"---------------------------------"}
+            </TerminalOutput>,
+          ]);
+        } catch (error) {
+          console.error(error);
+        }
+      }
     } else if (inputTokens[0] === "fetch") {
       console.log(inputTokens[0]);
-
       try {
         // const response = await RepositoryApi.fetchFile();
         // console.log(response);

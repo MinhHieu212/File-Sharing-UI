@@ -28,7 +28,7 @@ app.post("/fetch", (req, res) => {
   setTimeout(() => {
     // chưa giải quyết vấn đề async được nên ta dùng tạm thằng setTimeout
     node.fetchFile({ fileName });
-    res.status(200).send("File Received !!")
+    res.status(200).send("File Received !!");
   }, 1000);
 });
 // sau khi upload thì gọi API lên serverBE để update db
@@ -40,18 +40,20 @@ app.delete("/fileInRepo", (req, res) => {
   const { fileName } = req.body;
   // Check if fileName is provided in the request
   if (!fileName) {
-    return res.status(400).json({ error: 'File name is required in the request body' });
+    return res
+      .status(400)
+      .json({ error: "File name is required in the request body" });
   }
 
   // Construct the path to the file
 
-  const filePath =path.join(__dirname,"./repo",fileName)// Replace this with the actual path to your repository folder
+  const filePath = path.join(__dirname, "./repo", fileName); // Replace this with the actual path to your repository folder
 
   // Use fs.unlink() to delete the file
   fs.unlink(filePath, (err) => {
     if (err) {
-      console.error('Error deleting file:', err);
-      return res.status(500).json({ error: 'Internal server error' });
+      console.error("Error deleting file:", err);
+      return res.status(500).json({ error: "Internal server error" });
     }
     res.status(200).send("File deleted successfully");
   });
@@ -69,19 +71,19 @@ app.get("/hostRepo", (req, res) => {
 });
 // dùng để publdish lname fanme : quằng file từ disk vào repo
 app.post("/publishDiskToRepo", (req, res) => {
-  const lname=req.body.lname
-  const fname=req.body.fname
+  const lname = req.body.lname;
+  const fname = req.body.fname;
   const sourceFilePath = path.join(__dirname, "disk", lname);
   const destinationFilePath = path.join(__dirname, "repo", fname);
   fs.rename(sourceFilePath, destinationFilePath, (err) => {
     if (err) {
-      console.error('Error moving the file:', err);
-      res.status(400).send({error: err})
+      console.error("Error moving the file:", err);
+      res.status(400).send({ error: err });
     } else {
-      res.status(200).send({message:'File moved and renamed successfully.'});
+      res.status(200).send({ message: "File moved and renamed successfully." });
     }
+  });
 });
-})
 app.listen("8080", () => {
   console.log("P2P server for API is running on 8080");
 });
