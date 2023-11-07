@@ -58,7 +58,7 @@ module.exports = (options) => {
           } else if (message.data.type == "fetch") {
             const fileName = message.data.message.fileName;
             const nodeId = message.data.message.nodeId;
-            sendFile({ fileName });
+            sendFile({ fileName,nodeId });
           }
         } else if (message.type == "confirmation") {
           //server xử lí : sender
