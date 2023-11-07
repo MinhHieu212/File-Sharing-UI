@@ -157,7 +157,7 @@ module.exports = (options) => {
     }
   };
 
-  const findSocketIdWithNodeIdAndSend = (packet) => {
+  const findSocketIdFromNodeIdAndSend = (packet) => {
     console.log("sendFileToAllConnectedNode----");
     console.log(neighbors.keys());
     for (const nodeId of neighbors.keys()) {
@@ -175,7 +175,7 @@ module.exports = (options) => {
   ) => {
     console.log("in sendFile" + NODE_ID);
     console.log(neighbors.keys());
-    findSocketIdWithNodeIdAndSend({ id, ttl, type: "send", message, origin });
+    findSocketIdFromNodeIdAndSend({ id, ttl, type: "send", message, origin });
   };
   const fetchFile = (
     message,
@@ -185,7 +185,7 @@ module.exports = (options) => {
   ) => {
     console.log("in fetchFile " + NODE_ID);
     console.log(neighbors.keys());
-    findSocketIdWithNodeIdAndSend({ id, ttl, type: "fetch", message, origin });
+    findSocketIdFromNodeIdAndSend({ id, ttl, type: "fetch", message, origin });
   };
 
   emitter.on("exchanged_nodeId", (socketId) => {

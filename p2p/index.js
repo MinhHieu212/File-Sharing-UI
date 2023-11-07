@@ -40,8 +40,7 @@ app.post("/uploadRepo", uploadRepo.single("file"), (req, res) => {
   return res.status(200).send("Upload to Repo Success fully");
 });
 
-app.delete("/fileInRepo", (req, res) => {
-  console.log(req.body);
+app.post("/fileInRepo", (req, res) => {
   const { fileName } = req.body;
   // Check if fileName is provided in the request
   if (!fileName) {

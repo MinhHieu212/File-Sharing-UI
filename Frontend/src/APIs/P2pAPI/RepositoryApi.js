@@ -7,6 +7,12 @@ const RepositoryApi = {
     return BaseP2pApi.get(path);
   },
 
+  getListonDisk() {
+    const path = "/hostDisk";
+
+    return BaseP2pApi.get(path);
+  },
+
   addFile(data) {
     const path = "/uploadRepo";
 

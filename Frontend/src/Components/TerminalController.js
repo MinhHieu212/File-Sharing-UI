@@ -9,14 +9,6 @@ const TerminalController = (props = {}) => {
     <TerminalOutput>Welcome to the File Sharing Application</TerminalOutput>,
   ]);
 
-  const handleClear = () => {
-    setTerminalLineData([
-      <TerminalOutput>
-        {"Welcome to the File Sharing Application!"}
-      </TerminalOutput>,
-    ]);
-  };
-
   const hostName = localStorage.getItem("hostname");
   const updateHostRepoToServer = async () => {
     try {
@@ -47,10 +39,11 @@ const TerminalController = (props = {}) => {
           ...files.map((file, index) => (
             <TerminalOutput key={index}>
               <p className="w-[400px] flex justify-between">
-                <span className="text-[blue]">{file}</span>
+                <span className="text-blue-400">{file}</span>
               </p>
             </TerminalOutput>
           )),
+          <TerminalOutput></TerminalOutput>,
         ]);
       } catch (error) {
         console.error(error);
@@ -69,11 +62,12 @@ const TerminalController = (props = {}) => {
           ...files.map((fileItem, index) => (
             <TerminalOutput key={index}>
               <p className="w-[400px] flex justify-between">
-                <span className="text-[blue]"> {fileItem.file}</span>
+                <span className="text-blue-400"> {fileItem.file}</span>
                 <span> {fileItem.localIp}</span>
               </p>
             </TerminalOutput>
           )),
+          <TerminalOutput></TerminalOutput>,
         ]);
       } catch (error) {
         console.error(error);
@@ -103,7 +97,7 @@ const TerminalController = (props = {}) => {
               {"---------------------------------"}
             </TerminalOutput>,
             <TerminalOutput>
-              <span className="text-[orange]">Upload file success</span>
+              <span className="text-[yellow]">Upload file success</span>
             </TerminalOutput>,
           ]);
         } catch (error) {
@@ -111,44 +105,40 @@ const TerminalController = (props = {}) => {
         }
       }
     } else if (inputTokens[0] === "delete") {
-      console.log("Helle delete");
+      //  check filename trong repo cua client
+
+      console.log("Hello delete");
       try {
         const data = {
           fileName: inputTokens[1],
         };
-
         console.log("Delete", inputTokens[1]);
-        // const response = await axios.delete(
-        //   "http://localhost:8080/fileInRepo",
-        //   data
-        // );
-
-        const response = await axios.delete(
-          `http://localhost:8080/fileInRepo?fileName=${inputTokens[1]}`
+        const response = await axios.post(
+          "http://localhost:8080/fileInRepo",
+          data
         );
-
         if (response.status === 200) {
           console.log("File deleted successfully");
-
-          // updateHostRepoToServer();
-
-          // setTerminalLineData((prevData) => [
-          //   ...prevData,
-          //   <TerminalOutput>{`$ delete ${inputTokens[1]}`}</TerminalOutput>,
-          //   <TerminalOutput>
-          //     {"---------------------------------"}
-          //   </TerminalOutput>,
-          //   <TerminalOutput>
-          //     <span className="text-[orange]">Delete file success</span>
-          //   </TerminalOutput>,
-          // ]);
         }
+        console.log("delete esponse", response);
+
+        updateHostRepoToServer();
+
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          <TerminalOutput>{`$ delete ${inputTokens[1]}`}</TerminalOutput>,
+          <TerminalOutput>
+            {"---------------------------------"}
+          </TerminalOutput>,
+          <TerminalOutput>
+            <span className="text-[yellow]">Delete file success</span>
+          </TerminalOutput>,
+        ]);
       } catch (error) {
         console.error(error);
       }
     } else if (inputTokens[0] === "fetch") {
       let localIP = -1;
-
       try {
         const response = await ServerServiceApi.getListFile();
         const files = response.data.currentFiles;
@@ -171,7 +161,9 @@ const TerminalController = (props = {}) => {
           <TerminalOutput>
             {"---------------------------------"}
           </TerminalOutput>,
-          <TerminalOutput>{"FileName not found!"}</TerminalOutput>,
+          <TerminalOutput>
+            <span className="text-[yellow]">{"FileName not found!"} </span>
+          </TerminalOutput>,
         ]);
       } else {
         const fetchParams = {
@@ -190,14 +182,42 @@ const TerminalController = (props = {}) => {
             <TerminalOutput>
               {"---------------------------------"}
             </TerminalOutput>,
-            <TerminalOutput>{"Fetch file success"}</TerminalOutput>,
+            <TerminalOutput>
+              <span className="text-[yellow]">{"Fetch file success"} </span>
+            </TerminalOutput>,
           ]);
         } catch (error) {
           console.error(error);
         }
       }
+    } else if (terminalInput === "myDisk") {
+      try {
+        const response = await RepositoryApi.getListonDisk();
+        const files = response.data.files;
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          <TerminalOutput>{"$ myDisk"}</TerminalOutput>,
+          <TerminalOutput>
+            {"---------------------------------"}
+          </TerminalOutput>,
+          ...files.map((file, index) => (
+            <TerminalOutput key={index}>
+              <p className="w-[400px] flex justify-between  text-blue-400">
+                {file}
+              </p>
+            </TerminalOutput>
+          )),
+          <TerminalOutput></TerminalOutput>,
+        ]);
+      } catch (error) {
+        console.error(error);
+      }
     } else if (terminalInput === "clear") {
-      handleClear();
+      setTerminalLineData([
+        <TerminalOutput>
+          {"Welcome to the File Sharing Application!"}
+        </TerminalOutput>,
+      ]);
     } else {
       setTerminalLineData((prevData) => [
         ...prevData,
