@@ -57,7 +57,7 @@ module.exports = (options) => {
             socket.write(JSON.stringify(response));
           } else if (message.data.type == "fetch") {
             const fileName = message.data.message.fileName;
-            const nodeId = message.data.message.nodeId;
+            const nodeId = NODE_ID;
             sendFile({ fileName,nodeId });
           }
         } else if (message.type == "confirmation") {
@@ -174,12 +174,15 @@ module.exports = (options) => {
     console.log("sendFileToOnly1ConnectedNode----");
     for (const nodeId of neighbors.keys()) {
       console.log("The neighbor NodeID is: "+nodeId);
+      console.log("the packet.message.nodeId : " + packet.message?.nodeId);
+      console.log("---- "+packet);
       if (packet?.message?.nodeId == nodeId) {
         const socketId = neighbors.get(nodeId); // lấy connection id của mình dùng để kết nối với node của người ta
         // TODO handle no connection id error
         const data = packet;
         send(socketId, { type: "message", data });
       }
+      console.log("fail to send ");
     }
   };
   const findSocketIdFromNodeIdAndSendToOne2 = (packet) => {
