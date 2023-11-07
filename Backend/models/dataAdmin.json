@@ -1,1 +1,52 @@
-{"client":[{"hostname":"localhost","port":4001,"password":"123","isActive":true,"file":["5.pdf","newFile.pdf","video.mp4"],"localIp":"172.16.1.115","nodeId":"a813-782b-b23d-ed67-2630-45fb-8dd2-18d1"},{"hostname":"Don2512","password":"123","isActive":true,"port":3001,"localIp":"172.16.1.156","file":[".gitignore","30kB.docx","5.pdf","500kb.docx","BigDaddy_Report_3.pdf","BigDaddy_Report_4.pdf","hello.docx","lab.pdf","new.pdf","video.mp4"],"nodeId":"50b0-3649-a4df-7199-7139-07ab-6d98-3f2b"},{"hostname":"localhost1","password":"123","isActive":true,"port":3001,"file":[".gitignore"],"localIp":"172.16.1.107","nodeId":"79ee-e552-fcd1-c842-ca67-1b61-15bb-8948"},{"hostname":"localhost2","password":"123","localIp":"1"},{"hostname":"localhost3","password":"123","localIp":"1"},{"hostname":"admin123","password":"123","localIp":"1"}]}
+{
+  "client": [
+    {
+      "hostname": "localhost",
+      "port": 4001,
+      "password": "123",
+      "isActive": true,
+      "file": ["BigDaddy_Report_3.pdf", "BigDaddy_Report_4.pdf"],
+      "localIp": "172.16.1.115",
+      "nodeId": "bd6f-dc01-e194-c6d1-6b75-5205-ad8b-7a18"
+    },
+    {
+      "hostname": "Don2512",
+      "password": "123",
+      "isActive": true,
+      "port": 3001,
+      "localIp": "172.16.1.156",
+      "file": [
+        ".gitignore",
+        "30kB.docx",
+        "5.pdf",
+        "500kb.docx",
+        "BigDaddy_Report_3.pdf",
+        "BigDaddy_Report_4.pdf",
+        "hello.docx",
+        "lab.pdf",
+        "new.pdf",
+        "video.mp4"
+      ],
+      "nodeId": "4583-2145-7ecd-2f95-1f94-a33d-002e-d88e"
+    },
+    {
+      "hostname": "localhost1",
+      "password": "123",
+      "isActive": true,
+      "port": 3001,
+      "file": [".gitignore", "5.pdf", "hello.docx", "index.html", "lab.pdf"],
+      "localIp": "172.16.1.107",
+      "nodeId": "7e85-3957-2eb9-6e98-7796-b6a2-223d-e810"
+    },
+    { "hostname": "localhost2", "password": "123", "localIp": "1" },
+    { "hostname": "localhost3", "password": "123", "localIp": "1" },
+    {
+      "hostname": "admin123",
+      "password": "admin123",
+      "localIp": "172.16.1.115",
+      "isActive": true,
+      "nodeId": "a345-56fb-78f6-3c0c-fdc7-e168-d94c-a61c",
+      "file": []
+    }
+  ]
+}

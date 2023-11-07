@@ -8,7 +8,10 @@ const {
 } = require("./controller/controllerAdmin.js");
 const login = require("./controller/login");
 const register = require("./controller/register");
+const getAllCurrentFiles = require("./controller/getAllCurrentFiles");
 const getCurrentFiles = require("./controller/getCurrentFiles");
+const getHostName = require("./controller/getHostName");
+
 const updateHostListFile = require("./controller/updateHostListFile");
 
 const multer = require("multer");
@@ -56,9 +59,13 @@ app.post("/api/user", async (req, res) => {
 app.post("/api/login", login);
 app.post("/api/register", register);
 // Tìm kiếm file trong Backend
-app.get("/api/all-current-files", getCurrentFiles);
+app.get("/api/all-current-files", getAllCurrentFiles);
+//Tìm kiếm file của 1 host cụ thể trong Backend
+app.post("/api/current-files", getCurrentFiles);
 // update list file for hostname
 app.put("/api/list-file-of-a-host", updateHostListFile);
+// get hostname
+app.get("/api/hostname", getHostName);
 
 const PORT = 5000;
 
