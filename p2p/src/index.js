@@ -200,8 +200,8 @@ module.exports = (options) => {
     origin = NODE_ID,
     ttl = 255
   ) => {
-    console.log("in fetchFile " + NODE_ID);
-    console.log(neighbors.keys());
+    console.log("in fetchFile and my NODE_ID is: " + NODE_ID);
+    console.log("All the neighbor NODE_ID: " + neighbors.keys());
     // findSocketIdFromNodeIdAndSendToAllConnect({ id, ttl, type: "fetch", message, origin });    thang này là send to all
     findSocketIdFromNodeIdAndSendToOne({
       id,
