@@ -23,16 +23,16 @@ const ModalConfirmUpload = ({
     // them file moi vao repo cua client
     await RepositoryApi.addFile(formData);
     // call api thong bao den server
-
     const fileInfo = {
       hostname: hostName,
       file: file?.name,
     };
-
     await ServerServiceApi.uploadFileInfo(fileInfo);
 
     setOpenModal(false);
+    // reload lại danh sach trong repository
     await handleReloadRepo();
+    // reload lại danh sach trong comunity
     await handleReloadSystem();
   };
 
