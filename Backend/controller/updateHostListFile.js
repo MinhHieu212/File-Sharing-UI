@@ -12,7 +12,7 @@ async function updateHostListFile(req, res) {
   for (var i = 0; i < data.client.length; i++) {
     console.log(data.client[i].hostname);
     if (data.client[i].hostname == hostname) {
-      data.client[i].file = [file, ...data.client[i].file];
+      data.client[i].file = file;
       check = 1;
     }
   }
