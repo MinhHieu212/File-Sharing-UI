@@ -57,7 +57,7 @@ module.exports = (options) => {
             socket.write(JSON.stringify(response));
           } else if (message.data.type == "fetch") {
             const fileName = message.data.message.fileName;
-            const nodeId = NODE_ID;
+            const nodeId = message.data.message.nodeId;
             console.log("i am receving message fetch and sending nodide= "+nodeId);
             sendFile({ fileName,nodeId });
           }
