@@ -57,6 +57,7 @@ module.exports = (options) => {
             socket.write(JSON.stringify(response));
           } else if (message.data.type == "fetch") {
             const fileName = message.data.message.fileName;
+            const nodeId = message.data.message.nodeId;
             sendFile({ fileName });
           }
         } else if (message.type == "confirmation") {

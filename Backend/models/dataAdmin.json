@@ -1,1 +1,45 @@
-{"client":[{"hostname":"localhost","port":4001,"password":"123","isActive":true,"file":["100kB.docx","30kB.docx","5.pdf","hello.docx","new.pdf","video.mp4"],"localIp":"172.16.1.115","nodeId":"c190-0ac9-26ab-352c-ae6e-45be-3532-1344"},{"hostname":"Don2512","password":"123","isActive":true,"port":3001,"localIp":"172.16.1.156","file":[".gitignore","30kB.docx","5.pdf","500kb.docx","BigDaddy_Report_3.pdf","BigDaddy_Report_4.pdf","hello.docx","lab.pdf","new.pdf","video.mp4"],"nodeId":"6006-3d9c-da75-1c1d-c3bd-4400-9ddc-336a"},{"hostname":"localhost1","password":"123","isActive":true,"port":3001,"file":[".gitignore"],"localIp":"172.16.1.107","nodeId":"b449-46e0-fe07-f1d6-5bc1-a9b7-e6d3-3138"},{"hostname":"localhost2","password":"123","localIp":"1"},{"hostname":"localhost3","password":"123","localIp":"1"},{"hostname":"admin123","password":"123","localIp":"1"}]}
+{
+  "client": [
+    {
+      "hostname": "localhost",
+      "port": 4001,
+      "password": "123",
+      "isActive": false,
+      "file": ["5.pdf", "video.mp4"],
+      "localIp": "172.16.1.115",
+      "nodeId": "c190-0ac9-26ab-352c-ae6e-45be-3532-1344"
+    },
+    {
+      "hostname": "Don2512",
+      "password": "123",
+      "isActive": true,
+      "port": 3001,
+      "localIp": "172.16.1.156",
+      "file": [
+        ".gitignore",
+        "30kB.docx",
+        "5.pdf",
+        "500kb.docx",
+        "BigDaddy_Report_3.pdf",
+        "BigDaddy_Report_4.pdf",
+        "hello.docx",
+        "lab.pdf",
+        "new.pdf",
+        "video.mp4"
+      ],
+      "nodeId": "87d7-0d5e-65a0-180e-d4ba-9d7e-0cf4-bbef"
+    },
+    {
+      "hostname": "localhost1",
+      "password": "123",
+      "isActive": true,
+      "port": 3001,
+      "file": [".gitignore"],
+      "localIp": "172.16.1.107",
+      "nodeId": "c1c8-8753-ddb3-1b64-7a06-7a15-6f74-2a30"
+    },
+    { "hostname": "localhost2", "password": "123", "localIp": "1" },
+    { "hostname": "localhost3", "password": "123", "localIp": "1" },
+    { "hostname": "admin123", "password": "123", "localIp": "1" }
+  ]
+}
