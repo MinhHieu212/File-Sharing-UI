@@ -1,47 +1,12 @@
 import React, { useState } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
-import axios from 'axios';
+import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
+import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
 
 const TerminalController = (props = {}) => {
-  const [data, setData] = useState([
-    "Reply from 172.16.0.1 bytes = 42 times=42s TTL m= 64",
-    "Reply from 172.16.0.1 bytes = 32 times=24s TTL = 44",
-    "Reply from 172.16.0.1 bytes = 42 times=42s TTL m= 64",
-  ]);
-
   const [terminalLineData, setTerminalLineData] = useState([
     <TerminalOutput>Welcome to the File Sharing Application</TerminalOutput>,
   ]);
-
-  // const fetchDataFromBackend = async () => {
-  //   try {
-  //     // Gửi yêu cầu đến API của máy chủ BE
-  //     const response = await fetch("https://your-backend-api-url/data"); // Thay thế URL của API thật
-
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       // Thêm dữ liệu từ BE vào danh sách terminalLineData
-  //       setTerminalLineData((prevData) => [
-  //         ...prevData,
-  //         ...data.map((line, index) => (
-  //           <TerminalOutput key={index}>{line}</TerminalOutput>
-  //         )),
-  //       ]);
-  //     } else {
-  //       console.error("Failed to fetch data from the backend.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // Gọi hàm fetchDataFromBackend khi thành phần được tải
-  //   fetchDataFromBackend();
-  // }, []);
-
-  // Note:
-  // terminalLineData nhận vào một mạng dữ liêu, mỗi dòng trong mảng sẽ là một TerminalOutput
 
   const handleClear = () => {
     setTerminalLineData([
@@ -51,30 +16,138 @@ const TerminalController = (props = {}) => {
     ]);
   };
 
-  const handleInput = (terminalInput) => {
-    console.log(`New terminal input received: '${terminalInput}'`);
+  const hostName = localStorage.getItem("hostname");
+  const updateHostRepoToServer = async () => {
+    try {
+      const newListFile = await RepositoryApi.getList();
+      const fileInfo = {
+        hostname: hostName,
+        file: newListFile.data.files,
+      };
+      // call api thong bao den server
+      await ServerServiceApi.uploadFileInfo(fileInfo);
+    } catch (error) {
+      console.error("Error fetching data from API:", error);
+    }
+  };
 
+  const handleInput = async (terminalInput) => {
+    const inputTokens = terminalInput.split(" ");
+    if (inputTokens[0] === "myRepository") {
+      try {
+        const response = await RepositoryApi.getList();
+        const files = response.data.files;
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          <TerminalOutput>{"$ myRepository"}</TerminalOutput>,
+          <TerminalOutput>
+            {"---------------------------------"}
+          </TerminalOutput>,
+          ...files.map((file, index) => (
+            <TerminalOutput key={index}>
+              <p className="w-[400px] flex justify-between">
+                <span>{file}</span>
+              </p>
+            </TerminalOutput>
+          )),
+        ]);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (inputTokens[0] === "communityFile") {
+      try {
+        const response = await ServerServiceApi.getListFile();
+        const files = response.data.currentFiles;
+        console.log(files);
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          <TerminalOutput>{"$ communityFile"}</TerminalOutput>,
+          <TerminalOutput>
+            {"---------------------------------"}
+          </TerminalOutput>,
+          ...files.map((fileItem, index) => (
+            <TerminalOutput key={index}>
+              <p className="w-[400px] flex justify-between">
+                <span> {fileItem.file}</span>
+                <span> {fileItem.localIp}</span>
+              </p>
+            </TerminalOutput>
+          )),
+        ]);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (inputTokens[0] === "publish") {
+      if (inputTokens.length < 3) {
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          <TerminalOutput>{"Command Error"}</TerminalOutput>,
+        ]);
+      } else {
+        try {
+          const response = await RepositoryApi.publishFile({
+            lname: inputTokens[1],
+            fname: inputTokens[2],
+          });
+          console.log("publish Response", response);
 
-    axios.post('http://localhost:3001/api/admin', {terminalInput})
-    .then(response => {
-      // Xử lý kết quả từ phía Backend nếu cần
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+          // gưi thong bao den main server
+          updateHostRepoToServer();
+          // cho thong bao upload thanh cong
 
+          setTerminalLineData((prevData) => [
+            ...prevData,
+            <TerminalOutput>{`$ publish ${inputTokens[1]} ${inputTokens[2]}`}</TerminalOutput>,
+            <TerminalOutput>
+              {"---------------------------------"}
+            </TerminalOutput>,
+            <TerminalOutput>{"Upload file success"}</TerminalOutput>,
+          ]);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    } else if (inputTokens[0] === "fetch") {
+      let localIP;
 
-    // Thêm dữ liệu đầu vào từ prompt vào danh sách terminalLineData
-    if (terminalInput === "clear") {
+      try {
+        const response = await ServerServiceApi.getListFile();
+        const files = response.data.currentFiles;
+
+        for (let i = 0; i < files.length; i++) {
+          const fileItem = files[i];
+          if (fileItem.file === inputTokens[1]) {
+            localIP = fileItem.localIp;
+            break;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      const fetchParams = {
+        clientIp: localIP,
+        clientPort: 3000,
+        fileName: inputTokens[1],
+      };
+
+      try {
+        const response = await RepositoryApi.fetchFile(fetchParams);
+        console.log(response);
+
+        setTerminalLineData((prevData) => [
+          ...prevData,
+          <TerminalOutput>{`$ fetch ${inputTokens[1]}`}</TerminalOutput>,
+          <TerminalOutput>
+            {"---------------------------------"}
+          </TerminalOutput>,
+          <TerminalOutput>{"Fetch file success"}</TerminalOutput>,
+        ]);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (terminalInput === "clear") {
       handleClear();
-    } else if (terminalInput === "ping") {
-      setTerminalLineData((prevData) => [
-        ...prevData,
-        ...data.map((line, index) => (
-          <TerminalOutput key={index}>{line}</TerminalOutput>
-        )),
-      ]);
     } else {
       setTerminalLineData((prevData) => [
         ...prevData,

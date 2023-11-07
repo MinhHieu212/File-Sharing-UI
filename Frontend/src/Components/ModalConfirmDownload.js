@@ -14,6 +14,7 @@ const ModalConfirmDownLoad = ({ children, message, hostIp, fileName }) => {
     fileName: fileName,
   };
 
+  // call API fetch file
   const handelConfirm = async () => {
     try {
       const response = await RepositoryApi.fetchFile(fetchParams);

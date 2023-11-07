@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CenterModal from "./CenterModal";
 import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
 import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
+import axios from "axios";
 
 const ModalConfirmUpload = ({
   children,
@@ -20,19 +21,31 @@ const ModalConfirmUpload = ({
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("file", file);
-    // them file moi vao repo cua client
-    await RepositoryApi.addFile(formData);
-    // call api thong bao den server
 
+    axios
+      .post("http://localhost:8080/uploadRepo", formData)
+      .then(() => {
+        console.log("Upload Success");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log("Upload Repo Response", Response);
+
+    // lay danh sach file moi
+    const newListFile = await RepositoryApi.getList();
     const fileInfo = {
       hostname: hostName,
-      file: file?.name,
+      file: newListFile.data.files,
     };
-
+    // call api thong bao den server
     await ServerServiceApi.uploadFileInfo(fileInfo);
 
     setOpenModal(false);
+    // reload lại danh sach trong repository
     await handleReloadRepo();
+    // reload lại danh sach trong comunity
     await handleReloadSystem();
   };
 

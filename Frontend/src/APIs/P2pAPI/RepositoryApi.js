@@ -13,10 +13,15 @@ const RepositoryApi = {
     return BaseP2pApi.post(path, data);
   },
 
+  publishFile(data) {
+    const path = "/publishDiskToRepo";
+    console.log(data);
+    return BaseP2pApi.post(path, JSON.stringify(data));
+  },
+
   fetchFile(FileInfo) {
     const path = `/fetch`;
-    console.log(FileInfo);
-
+    // console.log(FileInfo);
     return BaseP2pApi.post(path, FileInfo);
   },
 
