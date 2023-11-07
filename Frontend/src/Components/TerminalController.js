@@ -4,12 +4,6 @@ import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
 import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
 
 const TerminalController = (props = {}) => {
-  const [data, setData] = useState([
-    "Reply from 172.16.0.1 bytes = 42 times=42s TTL m= 64",
-    "Reply from 172.16.0.1 bytes = 32 times=24s TTL = 44",
-    "Reply from 172.16.0.1 bytes = 42 times=42s TTL m= 64",
-  ]);
-
   const [terminalLineData, setTerminalLineData] = useState([
     <TerminalOutput>Welcome to the File Sharing Application</TerminalOutput>,
   ]);
