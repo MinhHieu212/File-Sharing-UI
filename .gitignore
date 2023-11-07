@@ -26,4 +26,6 @@ yarn-debug.log*
 yarn-error.log*
 #p2p download and repo
 p2p/downloads/*
+!p2p/downloads/
 p2p/repo/*
+!p2p/repo/

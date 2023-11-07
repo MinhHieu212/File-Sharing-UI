@@ -55,7 +55,7 @@ app.post("/api/user", async (req, res) => {
 // Đăng nhập , Đăng kí
 app.post("/api/login", login);
 app.post("/api/register", register);
-// Tìm kiếm file
+// Tìm kiếm file trong Backend
 app.get("/api/all-current-files", getCurrentFiles);
 // update list file for hostname
 app.put("/api/list-file-of-a-host", updateHostListFile);
