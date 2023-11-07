@@ -64,7 +64,7 @@ const TerminalController = (props = {}) => {
             lname: inputTokens[1],
             fname: inputTokens[2],
           });
-          console.log(response);
+          // console.log(response);
 
           // gưi thong bao den main server
 
@@ -72,10 +72,11 @@ const TerminalController = (props = {}) => {
 
           setTerminalLineData((prevData) => [
             ...prevData,
-            <TerminalOutput>{`$ publish ${inputTokens[1]} " " ${inputTokens[2]}`}</TerminalOutput>,
+            <TerminalOutput>{`$ publish ${inputTokens[1]} ${inputTokens[2]}`}</TerminalOutput>,
             <TerminalOutput>
               {"---------------------------------"}
             </TerminalOutput>,
+            <TerminalOutput>{"Upload file success"}</TerminalOutput>,
           ]);
         } catch (error) {
           console.error(error);

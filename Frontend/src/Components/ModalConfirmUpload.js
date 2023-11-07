@@ -21,12 +21,20 @@ const ModalConfirmUpload = ({
     const formData = new FormData();
     formData.append("file", file);
     // them file moi vao repo cua client
-    await RepositoryApi.addFile(formData);
+    console.log(file);
+    const rep = await RepositoryApi.addFile(formData);
+    console.log(rep);
+
     // call api thong bao den server
+    const newListFile = await RepositoryApi.getList()?.data?.files;
+
     const fileInfo = {
       hostname: hostName,
-      file: file?.name,
+      file: newListFile,
     };
+
+    console.log(fileInfo);
+
     await ServerServiceApi.uploadFileInfo(fileInfo);
 
     setOpenModal(false);
