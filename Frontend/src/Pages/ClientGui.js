@@ -39,7 +39,7 @@ const ClientGui = () => {
   const fetchListFileOnServer = async () => {
     try {
       const response = await ServerServiceApi.getListFile();
-      // console.log("ALL FIlE ON SYSTEM", response.data.currentFiles);
+      console.log("ALL FIlE ON SYSTEM", response);
       setFileOnSystem(response.data.currentFiles);
     } catch (error) {
       console.error("Error fetching data from API:", error);
@@ -88,6 +88,7 @@ const ClientGui = () => {
               <CommunityFileItem
                 fileName={fileItem.file}
                 hostIp={fileItem.localIp}
+                nodeId={fileItem.nodeId}
                 key={index}
               ></CommunityFileItem>
             ))}

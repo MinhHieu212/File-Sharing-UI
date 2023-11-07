@@ -5,6 +5,7 @@ import { MainLogo } from "../Icons/Icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import HostnameApi from "../APIs/ServerAPI/ServerServiceApi";
+import axios from "axios";
 
 const schema = yup.object().shape({
   hostname: yup.string().required("Hostname is required"),
@@ -20,7 +21,15 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await HostnameApi.login(data);
+      const nodeId = await axios.get("http://localhost:8080/nodeId");
+      console.log(nodeId);
+
+      const NewData = {
+        ...data,
+        nodeId: nodeId.data.nodeId,
+      };
+      console.log(NewData);
+      const response = await HostnameApi.login(NewData);
       if (response.status === 200) {
         localStorage.setItem("hostname", data.hostname);
         localStorage.setItem("password", data.password);

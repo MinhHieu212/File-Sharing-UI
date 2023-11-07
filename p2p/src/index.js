@@ -157,7 +157,7 @@ module.exports = (options) => {
     }
   };
 
-  const findSocketIdFromNodeIdAndSend = (packet) => {
+  const findSocketIdFromNodeIdAndSendToAllConnect = (packet) => {
     console.log("sendFileToAllConnectedNode----");
     console.log(neighbors.keys());
     for (const nodeId of neighbors.keys()) {
@@ -165,6 +165,17 @@ module.exports = (options) => {
       // TODO handle no connection id error
       const data = packet;
       send(socketId, { type: "message", data });
+    }
+  };
+  const findSocketIdFromNodeIdAndSendToOne = (packet) => {
+    console.log("sendFileToAllConnectedNode----");
+    for (const nodeId of neighbors.keys()) {
+      if (packet?.message?.nodeId == nodeId) {
+        const socketId = neighbors.get(nodeId); // lấy connection id của mình dùng để kết nối với node của người ta
+        // TODO handle no connection id error
+        const data = packet;
+        send(socketId, { type: "message", data });
+      }
     }
   };
   const sendFile = (
@@ -175,7 +186,13 @@ module.exports = (options) => {
   ) => {
     console.log("in sendFile" + NODE_ID);
     console.log(neighbors.keys());
-    findSocketIdFromNodeIdAndSend({ id, ttl, type: "send", message, origin });
+    findSocketIdFromNodeIdAndSendToAllConnect({
+      id,
+      ttl,
+      type: "send",
+      message,
+      origin,
+    });
   };
   const fetchFile = (
     message,
@@ -185,7 +202,14 @@ module.exports = (options) => {
   ) => {
     console.log("in fetchFile " + NODE_ID);
     console.log(neighbors.keys());
-    findSocketIdFromNodeIdAndSend({ id, ttl, type: "fetch", message, origin });
+    // findSocketIdFromNodeIdAndSendToAllConnect({ id, ttl, type: "fetch", message, origin });    thang này là send to all
+    findSocketIdFromNodeIdAndSendToOne({
+      id,
+      ttl,
+      type: "fetch",
+      message,
+      origin,
+    });
   };
 
   emitter.on("exchanged_nodeId", (socketId) => {

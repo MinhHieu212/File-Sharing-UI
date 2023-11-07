@@ -7,6 +7,7 @@ async function login(req, res) {
   console.log(req.body);
   const hostname = req.body.hostname;
   const password = req.body.password;
+  const nodeId = req.body.nodeId;
   const ipv6Address = req.socket.remoteAddress; //thằng này chỉ khi mà có client ngoài request
   const ipv4Address = ipv6Address.split(":").pop();
   const data = await readFull();
@@ -16,6 +17,7 @@ async function login(req, res) {
         const destination = path.join(__dirname, "../models/dataAdmin.json");
         data.client[i].localIp = ipv4Address;
         data.client[i].isActive = true;
+        data.client[i].nodeId = nodeId;
         fs.writeFileSync(destination, JSON.stringify(data));
         return res.status(200).send("Login Success !");
       }

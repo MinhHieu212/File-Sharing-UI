@@ -19,7 +19,7 @@ node.listen(3000, 3001, () => {
 });
 app.post("/fetch", (req, res) => {
   const clientIP = req.body.clientIp;
-  console.log(clientIP);
+  const nodeId=req.body.nodeId
   const clientPort = req.body.clientPort;
   const fileName = req.body.fileName;
   node.connect(clientIP, Number(clientPort), () => {
@@ -27,7 +27,7 @@ app.post("/fetch", (req, res) => {
   });
   setTimeout(() => {
     // chưa giải quyết vấn đề async được nên ta dùng tạm thằng setTimeout
-    node.fetchFile({ fileName });
+    node.fetchFile({ fileName, nodeId});
     res.status(200).send("File Received !!");
   }, 1000);
 });
@@ -84,6 +84,9 @@ app.get("/hostDisk", (req, res) => {
     // `files` is an array containing the names of all files in the directory
     return res.status(200).json({ files });
   });
+});
+app.get("/nodeId", (req, res) => {
+  res.status(200).send({nodeId:node.id})
 });
 // dùng để publdish lname fanme : quằng file từ disk vào repo
 app.post("/publishDiskToRepo", (req, res) => {
