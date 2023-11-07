@@ -4,8 +4,11 @@ const app = express();
 const uploadRepo = require("./config/upload");
 const fs = require("fs");
 const path = require("path");
-
+const multer = require("multer");
+var upload = multer();
 app.use(cors("*"));
+
+app.use(upload.array());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false }));
 
@@ -28,6 +31,8 @@ app.post("/fetch", (req, res) => {
     res.status(200).send("File Received !!")
   }, 1000);
 });
+// sau khi upload thì gọi API lên serverBE để update db
+
 app.post("/uploadRepo", uploadRepo.single("file"), (req, res) => {
   res.send("Upload to Repo Success fully");
 });
@@ -51,7 +56,6 @@ app.delete("/fileInRepo", (req, res) => {
     res.status(200).send("File deleted successfully");
   });
 });
-// sau khi upload thì gọi API lên serverBE để update db
 app.get("/hostRepo", (req, res) => {
   const folderPath = path.join(__dirname, "../p2p/repo");
   fs.readdir(folderPath, (err, files) => {
@@ -63,7 +67,21 @@ app.get("/hostRepo", (req, res) => {
     return res.status(200).json({ files });
   });
 });
-
+// dùng để publdish lname fanme : quằng file từ disk vào repo
+app.post("/publishDiskToRepo", (req, res) => {
+  const lname=req.body.lname
+  const fname=req.body.fname
+  const sourceFilePath = path.join(__dirname, "disk", lname);
+  const destinationFilePath = path.join(__dirname, "repo", fname);
+  fs.rename(sourceFilePath, destinationFilePath, (err) => {
+    if (err) {
+      console.error('Error moving the file:', err);
+      res.status(400).send({error: err})
+    } else {
+      res.status(200).send({message:'File moved and renamed successfully.'});
+    }
+});
+})
 app.listen("8080", () => {
   console.log("P2P server for API is running on 8080");
 });
