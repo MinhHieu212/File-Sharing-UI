@@ -16,6 +16,7 @@ async function getCurrentFiles(req, res) {
           const item = {
             file: data[i].file[j],
             localIp: data[i].localIp,
+            nodeId: data[i].nodeId,
           };
           currentFiles = currentFiles.concat(item);
         }
