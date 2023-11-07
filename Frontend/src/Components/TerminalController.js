@@ -139,6 +139,7 @@ const TerminalController = (props = {}) => {
       }
     } else if (inputTokens[0] === "fetch") {
       let localIP = -1;
+      let nodeId = -1;
       try {
         const response = await ServerServiceApi.getListFile();
         const files = response.data.currentFiles;
@@ -147,6 +148,7 @@ const TerminalController = (props = {}) => {
           const fileItem = files[i];
           if (fileItem.file === inputTokens[1]) {
             localIP = fileItem.localIp;
+            nodeId = fileItem.nodeId;
             break;
           }
         }
@@ -168,6 +170,7 @@ const TerminalController = (props = {}) => {
       } else {
         const fetchParams = {
           clientIp: localIP,
+          nodeId: nodeId,
           clientPort: 3000,
           fileName: inputTokens[1],
         };
