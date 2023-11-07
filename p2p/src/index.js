@@ -175,11 +175,27 @@ module.exports = (options) => {
     console.log("sendFileToOnly1ConnectedNode----");
     for (const nodeId of neighbors.keys()) {
       console.log("The neighbor NodeID is: "+nodeId);
+      console.log("the packet.message.nodeId : " + packet.message?.nodeId);
+      console.log("---- "+packet);
       if (packet?.message?.nodeId == nodeId) {
         const socketId = neighbors.get(nodeId); // lấy connection id của mình dùng để kết nối với node của người ta
         // TODO handle no connection id error
         const data = packet;
         send(socketId, { type: "message", data }); // chinh lai thanh nodeId cua Hung
+      }
+      console.log("fail to send ");
+    }
+  };
+  const findSocketIdFromNodeIdAndSendToOne2 = (packet) => {
+    console.log("sendFileToOnly1ConnectedNode----");
+    for (const nodeId of neighbors.keys()) {
+      console.log("The neighbor NodeID is: "+nodeId);
+      if (packet?.message?.nodeId == nodeId) {
+        const socketId = neighbors.get(nodeId); // lấy connection id của mình dùng để kết nối với node của người ta
+        // TODO handle no connection id error
+        packet.message.nodeId=NODE_ID
+        const data = packet;
+        send(socketId, { type: "message", data });
       }
     }
   };
@@ -200,14 +216,14 @@ module.exports = (options) => {
     });
   };
   const fetchFile = (
-    message,
+    message,            //trong nay cos nodeID Phuc
     id = randomuuid(),
     origin = NODE_ID,
     ttl = 255
   ) => {
-    console.log("in fetchFile and my NODE_ID is: " + NODE_ID);
+    console.log("in fetchFile and my NODE_ID is: " + NODE_ID);    
     // findSocketIdFromNodeIdAndSendToAllConnect({ id, ttl, type: "fetch", message, origin });    thang này là send to all
-    findSocketIdFromNodeIdAndSendToOne({
+    findSocketIdFromNodeIdAndSendToOne2({
       id,
       ttl,
       type: "fetch",
