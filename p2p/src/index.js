@@ -84,6 +84,8 @@ module.exports = (options) => {
           });
         }
         console.log("end on data -------------------------------");
+        console.log("\n");
+        console.log("\n");
       } catch (e) {
         // console.error(`Cannot parse message from peer`, data.toString())
         console.log(e);
@@ -168,8 +170,9 @@ module.exports = (options) => {
     }
   };
   const findSocketIdFromNodeIdAndSendToOne = (packet) => {
-    console.log("sendFileToAllConnectedNode----");
+    console.log("sendFileToOnly1ConnectedNode----");
     for (const nodeId of neighbors.keys()) {
+      console.log("The neighbor NodeID is: "+nodeId);
       if (packet?.message?.nodeId == nodeId) {
         const socketId = neighbors.get(nodeId); // lấy connection id của mình dùng để kết nối với node của người ta
         // TODO handle no connection id error
@@ -201,7 +204,6 @@ module.exports = (options) => {
     ttl = 255
   ) => {
     console.log("in fetchFile and my NODE_ID is: " + NODE_ID);
-    console.log("All the neighbor NODE_ID: " + neighbors.keys());
     // findSocketIdFromNodeIdAndSendToAllConnect({ id, ttl, type: "fetch", message, origin });    thang này là send to all
     findSocketIdFromNodeIdAndSendToOne({
       id,
@@ -222,7 +224,8 @@ module.exports = (options) => {
     const { type, data } = message;
     if (type === "handshake") {
       const { nodeId } = data;
-      console.log("In the handshake =============");
+      console.log("In the handshake ==============");
+      console.log("The Neighbor nodeId is: " + nodeId);
       neighbors.set(nodeId, socketId);
     }
   });
