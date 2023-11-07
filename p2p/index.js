@@ -34,7 +34,10 @@ app.post("/fetch", (req, res) => {
 // sau khi upload thì gọi API lên serverBE để update db
 
 app.post("/uploadRepo", uploadRepo.single("file"), (req, res) => {
-  res.send("Upload to Repo Success fully");
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  return res.status(200).send("Upload to Repo Success fully");
 });
 
 app.delete("/fileInRepo", (req, res) => {
