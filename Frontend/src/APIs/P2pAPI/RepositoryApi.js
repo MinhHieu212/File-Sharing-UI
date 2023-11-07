@@ -26,9 +26,9 @@ const RepositoryApi = {
   },
 
   deleteFile(data) {
-    const path = `/repository/${data}`;
+    const path = `/fileInRepo`;
 
-    return BaseP2pApi.delete(path);
+    return BaseP2pApi.delete(path, data);
   },
 };
 

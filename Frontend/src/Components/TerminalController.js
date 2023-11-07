@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
 import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
+import axios from "axios";
 
 const TerminalController = (props = {}) => {
   const [terminalLineData, setTerminalLineData] = useState([
@@ -46,7 +47,7 @@ const TerminalController = (props = {}) => {
           ...files.map((file, index) => (
             <TerminalOutput key={index}>
               <p className="w-[400px] flex justify-between">
-                <span>{file}</span>
+                <span className="text-[blue]">{file}</span>
               </p>
             </TerminalOutput>
           )),
@@ -68,7 +69,7 @@ const TerminalController = (props = {}) => {
           ...files.map((fileItem, index) => (
             <TerminalOutput key={index}>
               <p className="w-[400px] flex justify-between">
-                <span> {fileItem.file}</span>
+                <span className="text-[blue]"> {fileItem.file}</span>
                 <span> {fileItem.localIp}</span>
               </p>
             </TerminalOutput>
@@ -101,14 +102,52 @@ const TerminalController = (props = {}) => {
             <TerminalOutput>
               {"---------------------------------"}
             </TerminalOutput>,
-            <TerminalOutput>{"Upload file success"}</TerminalOutput>,
+            <TerminalOutput>
+              <span className="text-[orange]">Upload file success</span>
+            </TerminalOutput>,
           ]);
         } catch (error) {
           console.error(error);
         }
       }
+    } else if (inputTokens[0] === "delete") {
+      console.log("Helle delete");
+      try {
+        const data = {
+          fileName: inputTokens[1],
+        };
+
+        console.log("Delete", inputTokens[1]);
+        // const response = await axios.delete(
+        //   "http://localhost:8080/fileInRepo",
+        //   data
+        // );
+
+        const response = await axios.delete(
+          `http://localhost:8080/fileInRepo?fileName=${inputTokens[1]}`
+        );
+
+        if (response.status === 200) {
+          console.log("File deleted successfully");
+
+          // updateHostRepoToServer();
+
+          // setTerminalLineData((prevData) => [
+          //   ...prevData,
+          //   <TerminalOutput>{`$ delete ${inputTokens[1]}`}</TerminalOutput>,
+          //   <TerminalOutput>
+          //     {"---------------------------------"}
+          //   </TerminalOutput>,
+          //   <TerminalOutput>
+          //     <span className="text-[orange]">Delete file success</span>
+          //   </TerminalOutput>,
+          // ]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     } else if (inputTokens[0] === "fetch") {
-      let localIP;
+      let localIP = -1;
 
       try {
         const response = await ServerServiceApi.getListFile();
@@ -125,26 +164,37 @@ const TerminalController = (props = {}) => {
         console.error(error);
       }
 
-      const fetchParams = {
-        clientIp: localIP,
-        clientPort: 3000,
-        fileName: inputTokens[1],
-      };
-
-      try {
-        const response = await RepositoryApi.fetchFile(fetchParams);
-        console.log(response);
-
+      if (localIP === -1) {
         setTerminalLineData((prevData) => [
           ...prevData,
           <TerminalOutput>{`$ fetch ${inputTokens[1]}`}</TerminalOutput>,
           <TerminalOutput>
             {"---------------------------------"}
           </TerminalOutput>,
-          <TerminalOutput>{"Fetch file success"}</TerminalOutput>,
+          <TerminalOutput>{"FileName not found!"}</TerminalOutput>,
         ]);
-      } catch (error) {
-        console.error(error);
+      } else {
+        const fetchParams = {
+          clientIp: localIP,
+          clientPort: 3000,
+          fileName: inputTokens[1],
+        };
+
+        try {
+          const response = await RepositoryApi.fetchFile(fetchParams);
+          console.log(response);
+
+          setTerminalLineData((prevData) => [
+            ...prevData,
+            <TerminalOutput>{`$ fetch ${inputTokens[1]}`}</TerminalOutput>,
+            <TerminalOutput>
+              {"---------------------------------"}
+            </TerminalOutput>,
+            <TerminalOutput>{"Fetch file success"}</TerminalOutput>,
+          ]);
+        } catch (error) {
+          console.error(error);
+        }
       }
     } else if (terminalInput === "clear") {
       handleClear();

@@ -41,6 +41,7 @@ app.post("/uploadRepo", uploadRepo.single("file"), (req, res) => {
 });
 
 app.delete("/fileInRepo", (req, res) => {
+  console.log(req.body);
   const { fileName } = req.body;
   // Check if fileName is provided in the request
   if (!fileName) {
@@ -56,7 +57,9 @@ app.delete("/fileInRepo", (req, res) => {
   fs.unlink(filePath, (err) => {
     if (err) {
       console.error("Error deleting file:", err);
-      return res.status(500).json({ error: "Internal server error" });
+      return res
+        .status(500)
+        .json({ error: "Internal server error or no file found" });
     }
     res.status(200).send("File deleted successfully");
   });
