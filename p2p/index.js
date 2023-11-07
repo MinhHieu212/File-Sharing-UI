@@ -27,7 +27,7 @@ app.post("/fetch", (req, res) => {
   });
   setTimeout(() => {
     // chưa giải quyết vấn đề async được nên ta dùng tạm thằng setTimeout
-    node.fetchFile({ fileName });
+    node.fetchFile({ fileName, });
     res.status(200).send("File Received !!");
   }, 1000);
 });
@@ -40,7 +40,7 @@ app.post("/uploadRepo", uploadRepo.single("file"), (req, res) => {
   return res.status(200).send("Upload to Repo Success fully");
 });
 
-app.delete("/fileInRepo", (req, res) => {
+app.post("/fileInRepo", (req, res) => {
   const { fileName } = req.body;
   // Check if fileName is provided in the request
   if (!fileName) {
@@ -56,7 +56,7 @@ app.delete("/fileInRepo", (req, res) => {
   fs.unlink(filePath, (err) => {
     if (err) {
       console.error("Error deleting file:", err);
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error or no file found" });
     }
     res.status(200).send("File deleted successfully");
   });

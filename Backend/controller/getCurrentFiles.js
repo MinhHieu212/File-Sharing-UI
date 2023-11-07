@@ -8,7 +8,9 @@ async function getCurrentFiles(req, res) {
   //không xét trường hợp cùng tên , mặc định là các client không có file cùng tên cho đơn giản
   const data = await readFile(); //not include client
   for (var i = 0; i < data.length; i++) {
-    if (data[i]?.isActive) {
+    const ipv6Address = req.socket.remoteAddress; //thằng này chỉ khi mà có client ngoài request
+    const ipv4Address = ipv6Address.split(":").pop();
+    if (data[i]?.isActive && data[i]?.localIp!=ipv4Address) {
       if (data[i]?.file?.length > 0) {
         for (var j = 0; j < data[i].file.length; j++) {
           const item = {
