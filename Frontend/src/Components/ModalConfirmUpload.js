@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CenterModal from "./CenterModal";
 import RepositoryApi from "../APIs/P2pAPI/RepositoryApi";
 import ServerServiceApi from "../APIs/ServerAPI/ServerServiceApi";
+import axios from "axios";
 
 const ModalConfirmUpload = ({
   children,
@@ -20,11 +21,17 @@ const ModalConfirmUpload = ({
   const handleConfirm = async () => {
     const formData = new FormData();
     formData.append("file", file);
-    // them file moi vao repo cua client
-    console.log(file);
-    // call api add file moi vao repo
-    const Response = await RepositoryApi.addFile(formData);
-    console.log(Response);
+
+    axios
+      .post("http://localhost:8080/uploadRepo", formData)
+      .then(() => {
+        console.log("Upload Success");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log("Upload Repo Response", Response);
 
     // lay danh sach file moi
     const newListFile = await RepositoryApi.getList();

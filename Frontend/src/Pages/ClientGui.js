@@ -12,6 +12,20 @@ const ClientGui = () => {
   const [fileOnRepo, setFileOnRepo] = useState([]);
   const hostName = localStorage.getItem("hostname");
 
+  const updateHostRepoToServer = async () => {
+    try {
+      const newListFile = await RepositoryApi.getList();
+      const fileInfo = {
+        hostname: hostName,
+        file: newListFile.data.files,
+      };
+      // call api thong bao den server
+      await ServerServiceApi.uploadFileInfo(fileInfo);
+    } catch (error) {
+      console.error("Error fetching data from API:", error);
+    }
+  };
+
   const fetchListFileOnRepository = async () => {
     try {
       const response = await RepositoryApi.getList();
@@ -33,14 +47,24 @@ const ClientGui = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const fetchData = async () => {
+      try {
+        await updateHostRepoToServer();
+      } catch (error) {
+        console.error("Error updating data to server:", error);
+      }
+
+      const intervalId = setInterval(() => {
+        fetchListFileOnServer();
+      }, 100000);
+
       fetchListFileOnServer();
-    }, 100000);
+      fetchListFileOnRepository();
 
-    fetchListFileOnServer();
-    fetchListFileOnRepository();
+      return () => clearInterval(intervalId);
+    };
 
-    return () => clearInterval(intervalId);
+    fetchData();
   }, []);
 
   return (

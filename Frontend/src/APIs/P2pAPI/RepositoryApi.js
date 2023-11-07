@@ -21,8 +21,7 @@ const RepositoryApi = {
 
   fetchFile(FileInfo) {
     const path = `/fetch`;
-    console.log(FileInfo);
-
+    // console.log(FileInfo);
     return BaseP2pApi.post(path, FileInfo);
   },
 
