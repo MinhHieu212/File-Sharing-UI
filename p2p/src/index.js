@@ -57,7 +57,8 @@ module.exports = (options) => {
             socket.write(JSON.stringify(response));
           } else if (message.data.type == "fetch") {
             const fileName = message.data.message.fileName;
-            const nodeId = message.data.message.nodeId;
+            const nodeId = NODE_ID;
+            console.log("i am receving message fetch and sending nodide= "+nodeId);
             sendFile({ fileName,nodeId });
           }
         } else if (message.type == "confirmation") {
@@ -178,7 +179,7 @@ module.exports = (options) => {
         const socketId = neighbors.get(nodeId); // lấy connection id của mình dùng để kết nối với node của người ta
         // TODO handle no connection id error
         const data = packet;
-        send(socketId, { type: "message", data });
+        send(socketId, { type: "message", data }); // chinh lai thanh nodeId cua Hung
       }
     }
   };
