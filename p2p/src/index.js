@@ -186,7 +186,7 @@ module.exports = (options) => {
   ) => {
     console.log("in sendFile" + NODE_ID);
     console.log(neighbors.keys());
-    findSocketIdFromNodeIdAndSendToAllConnect({
+    findSocketIdFromNodeIdAndSendToOne({
       id,
       ttl,
       type: "send",

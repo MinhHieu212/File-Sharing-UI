@@ -20,6 +20,7 @@ node.listen(3000, 3001, () => {
 app.post("/fetch", (req, res) => {
   const clientIP = req.body.clientIp;
   const nodeId=req.body.nodeId
+  console.log("The Other peer NodeID is: "+nodeId);
   const clientPort = req.body.clientPort;
   const fileName = req.body.fileName;
   node.connect(clientIP, Number(clientPort), () => {
