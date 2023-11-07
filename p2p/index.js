@@ -4,11 +4,11 @@ const app = express();
 const uploadRepo = require("./config/upload");
 const fs = require("fs");
 const path = require("path");
-const multer = require("multer");
-var upload = multer();
+// const multer = require("multer");
+// var upload = multer();
 app.use(cors("*"));
 
-app.use(upload.array());
+// app.use(upload.array());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false }));
 
