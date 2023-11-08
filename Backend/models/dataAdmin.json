@@ -6,7 +6,7 @@
       "password": "123",
       "isActive": true,
       "file": ["BigDaddy_Report_3.pdf", "BigDaddy_Report_4.pdf"],
-      "localIp": "172.16.1.115",
+      "localIp": "10.230.7.183",
       "nodeId": "bd6f-dc01-e194-c6d1-6b75-5205-ad8b-7a18"
     },
     {

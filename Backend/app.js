@@ -11,6 +11,7 @@ const register = require("./controller/register");
 const getAllCurrentFiles = require("./controller/getAllCurrentFiles");
 const getCurrentFiles = require("./controller/getCurrentFiles");
 const getHostName = require("./controller/getHostName");
+const ping = require("./controller/ping");
 
 const updateHostListFile = require("./controller/updateHostListFile");
 
@@ -66,6 +67,7 @@ app.post("/api/current-files", getCurrentFiles);
 app.put("/api/list-file-of-a-host", updateHostListFile);
 // get hostname
 app.get("/api/hostname", getHostName);
+app.post("/api/ping", ping);
 
 const PORT = 5000;
 

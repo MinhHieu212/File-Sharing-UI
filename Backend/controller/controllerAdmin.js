@@ -39,7 +39,7 @@ const controllerCommand = async (req, res) => {
     }
     else if(array[0] === "ping")
     {
-        tcpp.probe( hostname.hostName, hostname.port, async (err, available) => {
+        tcpp.probe( hostname.hostName, async (err, available) => {
             return res.send({"ping" : available})
         });  
     }
