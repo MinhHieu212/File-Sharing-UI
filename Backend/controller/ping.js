@@ -7,7 +7,7 @@ async function ping(req, res) {
   var localIp = 0;
   const data = await readFull();
   for (var i = 0; i < data.client.length; i++) {
-    if (data.client[i].hostname == hostname) {
+    if (data.client[i].hostname == hostname && data.client[i].isActive==true) {
       localIp = data.client[i].localIp;
       checkHostname = true;
       var obj = await icmp.send(localIp, "Hey, I'm sending a message!");

@@ -12,6 +12,7 @@ const getAllCurrentFiles = require("./controller/getAllCurrentFiles");
 const getCurrentFiles = require("./controller/getCurrentFiles");
 const getHostName = require("./controller/getHostName");
 const ping = require("./controller/ping");
+const logout = require("./controller/logout");
 
 const updateHostListFile = require("./controller/updateHostListFile");
 
@@ -56,9 +57,10 @@ app.post("/api/user", async (req, res) => {
   await controllerCommand(req, res);
 });
 
-// Đăng nhập , Đăng kí
+// Đăng nhập , Đăng kí, Đăng xuất
 app.post("/api/login", login);
 app.post("/api/register", register);
+app.post("/api/logout", logout);
 // Tìm kiếm file trong Backend
 app.get("/api/all-current-files", getAllCurrentFiles);
 //Tìm kiếm file của 1 host cụ thể trong Backend
@@ -68,6 +70,7 @@ app.put("/api/list-file-of-a-host", updateHostListFile);
 // get hostname
 app.get("/api/hostname", getHostName);
 app.post("/api/ping", ping);
+
 
 const PORT = 5000;
 
