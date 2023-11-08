@@ -4,6 +4,8 @@ const app = express();
 const uploadRepo = require("./config/upload");
 const fs = require("fs");
 const path = require("path");
+const formatSize = require("./helper/formatSize");
+
 // const multer = require("multer");
 // var upload = multer();
 app.use(cors("*"));
@@ -64,17 +66,53 @@ app.post("/fileInRepo", (req, res) => {
     res.status(200).send("File deleted successfully");
   });
 });
-app.get("/hostRepo", (req, res) => {
-  const folderPath = path.join(__dirname, "../p2p/repo");
+// app.get("/hostRepo", (req, res) => {
+//   const folderPath = path.join(__dirname, "../p2p/repo");
+//   fs.readdir(folderPath, (err, files) => {
+//     if (err) {
+//       console.error("Error reading directory:", err);
+//       return;
+//     }
+//     // `files` is an array containing the names of all files in the directory
+//     return res.status(200).json({ files });
+//   });
+// });
+
+app.get('/hostRepo', (req, res) => {
+  const folderPath = path.join(__dirname, '../p2p/repo');
   fs.readdir(folderPath, (err, files) => {
     if (err) {
-      console.error("Error reading directory:", err);
-      return;
+      console.error('Error reading directory:', err);
+      return res.status(500).json({ error: 'Error reading directory' });
     }
-    // `files` is an array containing the names of all files in the directory
-    return res.status(200).json({ files });
+
+    const filesWithSizes = [];
+
+    // Iterate through the files and get their sizes
+    files.forEach((file) => {
+      const filePath = path.join(folderPath, file);
+      fs.stat(filePath, (statErr, stats) => {
+        if (statErr) {
+          console.error('Error getting file stats:', statErr);
+        } else {
+          // Add file name and size to the response array
+          var formattedSize=formatSize(stats.size)
+          filesWithSizes.push({ name: file, size: formattedSize });
+        }
+
+        // If all files have been processed, send the response
+        if (filesWithSizes.length === files.length) {
+          return res.status(200).json({ files: filesWithSizes });
+        }
+      });
+    });
   });
 });
+
+
+
+
+
 app.get("/hostDisk", (req, res) => {
   const folderPath = path.join(__dirname, "../p2p/disk");
   fs.readdir(folderPath, (err, files) => {

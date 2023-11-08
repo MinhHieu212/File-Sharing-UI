@@ -4,21 +4,10 @@
       "hostname": "localhost",
       "port": 4001,
       "password": "123",
-      "isActive": false,
-      "file": [
-        ".gitignore",
-        "30kB.docx",
-        "5.pdf",
-        "500kb.docx",
-        "BigDaddy_Report_3.pdf",
-        "BigDaddy_Report_4.pdf",
-        "hello.docx",
-        "lab.pdf",
-        "new.pdf",
-        "video.mp4"
-      ],
-      "localIp": "10.230.173.226",
-      "nodeId": "This host log out from p2p"
+      "isActive": true,
+      "file": ["BigDaddy_Report_3.pdf"],
+      "localIp": "10.230.7.183",
+      "nodeId": "e4e9-96aa-dd22-7165-7832-7ff2-e22d-3372"
     },
     {
       "hostname": "Don2512",
@@ -34,20 +23,21 @@
         "BigDaddy_Report_3.pdf",
         "BigDaddy_Report_4.pdf",
         "hello.docx",
+        "HK231_CO3001_Plan (2).xlsx",
         "lab.pdf",
         "new.pdf",
         "video.mp4"
       ],
-      "nodeId": "f663-81c7-7e24-b28d-4bc9-cac0-8ac1-964d"
+      "nodeId": "7a26-7ac2-e2a3-f628-9128-1333-653c-9abb"
     },
     {
       "hostname": "localhost1",
       "password": "123",
-      "isActive": true,
+      "isActive": false,
       "port": 3001,
-      "file": [".gitignore", "5.pdf", "hello.docx", "index.html", "lab.pdf"],
-      "localIp": "172.16.1.107",
-      "nodeId": "7e85-3957-2eb9-6e98-7796-b6a2-223d-e810"
+      "file": ["BigDaddy_Report_3.pdf"],
+      "localIp": "10.230.7.183",
+      "nodeId": "This host log out from p2p"
     },
     { "hostname": "localhost2", "password": "123", "localIp": "1" },
     { "hostname": "localhost3", "password": "123", "localIp": "1" },
@@ -55,8 +45,8 @@
       "hostname": "admin123",
       "password": "admin123",
       "localIp": "10.230.7.183",
-      "isActive": true,
-      "nodeId": "0eae-3373-1879-8060-34a4-97f7-41a8-8333",
+      "isActive": false,
+      "nodeId": "This host log out from p2p",
       "file": []
     }
   ]
